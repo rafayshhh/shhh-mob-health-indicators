@@ -1,0 +1,41 @@
+{
+	"schemaVersion": 1,
+	"id": "shhh-mob-health-indicators",
+	"version": "${version}",
+	"name": "Shhh Mob Health Indicators",
+	"description": "An upgraded mob health indicator mod for Minecraft.",
+	"authors": [
+		"RafayShhh"
+	],
+	"contact": {
+		"homepage": "https://github.com/RafayShhh/shhh-mob-health-indicators",
+		"sources": "https://github.com/RafayShhh/shhh-mob-health-indicators",
+		"issues": "https://github.com/RafayShhh/shhh-mob-health-indicators/issues"
+	},
+	"license": "MIT",
+	"icon": "assets/shhh-mob-health-indicators/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"client": [
+			"io.github.rafayshhh.shhhmobhealthindicators.client.ShhhMobHealthIndicatorsClient"
+		],
+		"modmenu": [
+			"io.github.rafayshhh.shhhmobhealthindicators.client.integration.ModMenuIntegration"
+		]
+	},
+	"mixins": [
+		{
+			"config": "shhh-mob-health-indicators.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.20.1",
+		"minecraft": "~26.3",
+		"java": ">=25",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"modmenu": "*"
+	}
+}

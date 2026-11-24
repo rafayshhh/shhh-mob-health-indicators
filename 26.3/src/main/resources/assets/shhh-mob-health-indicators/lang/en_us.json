@@ -1,0 +1,39 @@
+{
+	"modmenu.nameTranslation.shhh-mob-health-indicators": "Shhh Mob Health Indicators",
+	"modmenu.descriptionTranslation.shhh-mob-health-indicators": "An upgraded mob health indicator mod with multiple visual presets, RPG tiered hearts, and comprehensive mob category filtering.",
+
+	"key.category.shhh-mob-health-indicators.main": "Shhh Mob Health Indicators",
+	"key.shhh-mob-health-indicators.toggle": "Toggle Mob Health Indicators",
+	"key.shhh-mob-health-indicators.settings": "Open Mob Health Settings Screen",
+
+	"shhh-mob-health-indicators.config.title": "Shhh Mob Health Indicators Settings",
+	"shhh-mob-health-indicators.config.enabled": "Mob Indicators",
+	"shhh-mob-health-indicators.config.preset": "Preset",
+	"shhh-mob-health-indicators.config.position": "Position",
+	"shhh-mob-health-indicators.config.heart_texture": "Heart Texture",
+	"shhh-mob-health-indicators.config.show_absorption": "Absorption",
+	"shhh-mob-health-indicators.config.show_hostile": "Hostile Mobs",
+	"shhh-mob-health-indicators.config.show_passive": "Passive Mobs",
+	"shhh-mob-health-indicators.config.show_bosses": "Boss Mobs",
+	"shhh-mob-health-indicators.config.show_named_only": "Named Only",
+	"shhh-mob-health-indicators.config.hide_full_health": "Hide at 100% HP",
+	"shhh-mob-health-indicators.config.hide_invisible": "Hide Invisible",
+	"shhh-mob-health-indicators.config.distance": "Max Distance: %dm",
+	"shhh-mob-health-indicators.config.color_grading": "Dynamic Color Grading",
+
+	"shhh-mob-health-indicators.heart_texture.vanilla": "Vanilla (Textured)",
+	"shhh-mob-health-indicators.heart_texture.hardcore": "Hardcore (Textured)",
+	"shhh-mob-health-indicators.heart_texture.unicode": "Unicode (❤)",
+
+	"shhh-mob-health-indicators.preset.hearts": "Classic Hearts",
+	"shhh-mob-health-indicators.preset.compact": "Compact (❤ 20/20)",
+	"shhh-mob-health-indicators.preset.bar": "Health Bar [██████]",
+	"shhh-mob-health-indicators.preset.numeric": "Minimal (20 HP)",
+	"shhh-mob-health-indicators.preset.lifesteal": "RPG / Hearts (10/10)",
+
+	"shhh-mob-health-indicators.position.above": "Above Name Tag",
+	"shhh-mob-health-indicators.position.below": "Below Name Tag",
+
+	"shhh-mob-health-indicators.feedback.enabled": "Mob Health Indicators: ON (%s)",
+	"shhh-mob-health-indicators.feedback.disabled": "Mob Health Indicators: OFF"
+}
