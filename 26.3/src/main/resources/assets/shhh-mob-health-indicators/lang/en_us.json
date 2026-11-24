@@ -21,6 +21,20 @@
 	"shhh-mob-health-indicators.config.distance": "Max Distance: %dm",
 	"shhh-mob-health-indicators.config.color_grading": "Dynamic Color Grading",
 
+	"shhh-mob-health-indicators.tooltip.enabled": "Master switch to turn all mob health indicators ON or OFF.",
+	"shhh-mob-health-indicators.tooltip.preset": "Cycle through visual display styles (Hearts, Compact, Bar, Numeric, RPG).",
+	"shhh-mob-health-indicators.tooltip.position": "Position indicator above or below the mob's nameplate.",
+	"shhh-mob-health-indicators.tooltip.heart_texture": "Choose between authentic Vanilla pixel-art, Hardcore, or Unicode hearts.",
+	"shhh-mob-health-indicators.tooltip.show_absorption": "Display golden absorption hearts from effects or golden apples.",
+	"shhh-mob-health-indicators.tooltip.show_hostile": "Toggle health indicators for monsters and hostile enemies.",
+	"shhh-mob-health-indicators.tooltip.show_passive": "Toggle health indicators for animals and peaceful creatures.",
+	"shhh-mob-health-indicators.tooltip.show_bosses": "Toggle health indicators for bosses (Wither, Warden, Elder Guardian, etc.).",
+	"shhh-mob-health-indicators.tooltip.show_named_only": "Only show indicators on mobs that have been named with a Name Tag.",
+	"shhh-mob-health-indicators.tooltip.hide_full_health": "Hide indicators for unharmed mobs at 100% health to reduce clutter.",
+	"shhh-mob-health-indicators.tooltip.hide_invisible": "Hide indicators when mobs have active invisibility status effects.",
+	"shhh-mob-health-indicators.tooltip.distance": "Maximum distance in blocks to display mob health indicators.",
+	"shhh-mob-health-indicators.tooltip.color_grading": "Dynamically shift health color from green to red based on remaining HP.",
+
 	"shhh-mob-health-indicators.heart_texture.vanilla": "Vanilla (Textured)",
 	"shhh-mob-health-indicators.heart_texture.hardcore": "Hardcore (Textured)",
 	"shhh-mob-health-indicators.heart_texture.unicode": "Unicode (❤)",
@@ -35,5 +49,8 @@
 	"shhh-mob-health-indicators.position.below": "Below Name Tag",
 
 	"shhh-mob-health-indicators.feedback.enabled": "Mob Health Indicators: ON (%s)",
-	"shhh-mob-health-indicators.feedback.disabled": "Mob Health Indicators: OFF"
+	"shhh-mob-health-indicators.feedback.disabled": "Mob Health Indicators: OFF",
+
+	"shhh-mob-health-indicators.command.preset_changed": "Mob health preset set to",
+	"shhh-mob-health-indicators.command.invalid_preset": "Invalid preset '%s'. Available: hearts, compact, bar, numeric, lifesteal"
 }

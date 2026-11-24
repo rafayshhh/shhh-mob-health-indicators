@@ -70,8 +70,11 @@ public class HealthTracker {
 		}
 
 		UUID uuid = entity.getUUID();
-		if (entity.isDeadOrDying()) {
+
+		// Filter: Dead or dying entity - remove indicator immediately on lethal hit
+		if (entity.isDeadOrDying() || !entity.isAlive() || entity.getHealth() <= 0.0f) {
 			MAX_HEALTH_CACHE.remove(uuid);
+			return null;
 		}
 
 		float health = entity.getHealth();
@@ -92,6 +95,16 @@ public class HealthTracker {
 			|| entity instanceof EnderDragon
 			|| entity instanceof Warden
 			|| entity instanceof ElderGuardian;
+	}
+
+	public static void forget(UUID uuid) {
+		if (uuid != null) {
+			MAX_HEALTH_CACHE.remove(uuid);
+		}
+	}
+
+	public static void clear() {
+		MAX_HEALTH_CACHE.clear();
 	}
 
 	private static float updateMaxHealth(UUID uuid, float health, float maxHealth) {

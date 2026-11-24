@@ -36,17 +36,12 @@ public class HealthRenderer {
 			return;
 		}
 
-		// Retrieve extracted health
+		// Retrieve pre-built health component
 		if (!(state instanceof HealthRenderStateAccessor accessor)) {
 			return;
 		}
-		HealthInfo info = accessor.shhh$getHealthInfo();
-		if (info == null) {
-			return;
-		}
-
-		Component healthText = HealthComponentBuilder.build(info, config.preset, config);
-		if (healthText.getString().isEmpty()) {
+		Component healthText = accessor.shhh$getHealthComponent();
+		if (healthText == null || healthText.getString().isEmpty()) {
 			return;
 		}
 

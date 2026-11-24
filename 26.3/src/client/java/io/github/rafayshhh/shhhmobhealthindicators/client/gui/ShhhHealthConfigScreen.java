@@ -4,6 +4,7 @@ import io.github.rafayshhh.shhhmobhealthindicators.client.config.IndicatorPositi
 import io.github.rafayshhh.shhhmobhealthindicators.client.config.ShhhHealthConfig;
 import net.minecraft.client.gui.components.AbstractSliderButton;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.layouts.HeaderAndFooterLayout;
 import net.minecraft.client.gui.layouts.LinearLayout;
 import net.minecraft.client.gui.screens.Screen;
@@ -12,7 +13,7 @@ import net.minecraft.network.chat.Component;
 
 /**
  * In-game configuration screen for Shhh Mob Health Indicators.
- * Accessible via Mod Menu or custom keybinds.
+ * Accessible via Mod Menu, custom keybinds, or /mobhealth commands.
  */
 public class ShhhHealthConfigScreen extends Screen {
 	private final Screen parent;
@@ -35,12 +36,13 @@ public class ShhhHealthConfigScreen extends Screen {
 			button -> {
 				ShhhHealthConfig config = ShhhHealthConfig.get();
 				config.enabled = !config.enabled;
-				ShhhHealthConfig.save();
 				button.setMessage(getEnableMessage());
 			}
-		).width(310).build();
+		)
+		.tooltip(Tooltip.create(Component.translatable("shhh-mob-health-indicators.tooltip.enabled")))
+		.width(310)
+		.build();
 		content.addChild(enableButton);
-		addRenderableWidget(enableButton);
 
 		// Row 2: Preset Selector | Position Selector
 		LinearLayout row2 = LinearLayout.horizontal().spacing(8);
@@ -49,24 +51,26 @@ public class ShhhHealthConfigScreen extends Screen {
 			button -> {
 				ShhhHealthConfig config = ShhhHealthConfig.get();
 				config.preset = config.preset.next();
-				ShhhHealthConfig.save();
 				button.setMessage(getPresetMessage());
 			}
-		).width(151).build();
+		)
+		.tooltip(Tooltip.create(Component.translatable("shhh-mob-health-indicators.tooltip.preset")))
+		.width(151)
+		.build();
 		row2.addChild(presetButton);
-		addRenderableWidget(presetButton);
 
 		Button positionButton = Button.builder(
 			getPositionMessage(),
 			button -> {
 				ShhhHealthConfig config = ShhhHealthConfig.get();
 				config.position = config.position.next();
-				ShhhHealthConfig.save();
 				button.setMessage(getPositionMessage());
 			}
-		).width(151).build();
+		)
+		.tooltip(Tooltip.create(Component.translatable("shhh-mob-health-indicators.tooltip.position")))
+		.width(151)
+		.build();
 		row2.addChild(positionButton);
-		addRenderableWidget(positionButton);
 		content.addChild(row2);
 
 		// Row 3: Heart Texture Style | Absorption Hearts
@@ -76,24 +80,26 @@ public class ShhhHealthConfigScreen extends Screen {
 			button -> {
 				ShhhHealthConfig config = ShhhHealthConfig.get();
 				config.heartTexture = config.heartTexture.next();
-				ShhhHealthConfig.save();
 				button.setMessage(getTextureMessage());
 			}
-		).width(151).build();
+		)
+		.tooltip(Tooltip.create(Component.translatable("shhh-mob-health-indicators.tooltip.heart_texture")))
+		.width(151)
+		.build();
 		row3.addChild(textureButton);
-		addRenderableWidget(textureButton);
 
 		Button absorptionButton = Button.builder(
 			getAbsorptionMessage(),
 			button -> {
 				ShhhHealthConfig config = ShhhHealthConfig.get();
 				config.showAbsorption = !config.showAbsorption;
-				ShhhHealthConfig.save();
 				button.setMessage(getAbsorptionMessage());
 			}
-		).width(151).build();
+		)
+		.tooltip(Tooltip.create(Component.translatable("shhh-mob-health-indicators.tooltip.show_absorption")))
+		.width(151)
+		.build();
 		row3.addChild(absorptionButton);
-		addRenderableWidget(absorptionButton);
 		content.addChild(row3);
 
 		// Row 4: Hostile Mobs | Passive Mobs
@@ -103,24 +109,26 @@ public class ShhhHealthConfigScreen extends Screen {
 			button -> {
 				ShhhHealthConfig config = ShhhHealthConfig.get();
 				config.showHostile = !config.showHostile;
-				ShhhHealthConfig.save();
 				button.setMessage(getHostileMessage());
 			}
-		).width(151).build();
+		)
+		.tooltip(Tooltip.create(Component.translatable("shhh-mob-health-indicators.tooltip.show_hostile")))
+		.width(151)
+		.build();
 		row4.addChild(hostileButton);
-		addRenderableWidget(hostileButton);
 
 		Button passiveButton = Button.builder(
 			getPassiveMessage(),
 			button -> {
 				ShhhHealthConfig config = ShhhHealthConfig.get();
 				config.showPassive = !config.showPassive;
-				ShhhHealthConfig.save();
 				button.setMessage(getPassiveMessage());
 			}
-		).width(151).build();
+		)
+		.tooltip(Tooltip.create(Component.translatable("shhh-mob-health-indicators.tooltip.show_passive")))
+		.width(151)
+		.build();
 		row4.addChild(passiveButton);
-		addRenderableWidget(passiveButton);
 		content.addChild(row4);
 
 		// Row 5: Boss Mobs | Named Mobs Only
@@ -130,24 +138,26 @@ public class ShhhHealthConfigScreen extends Screen {
 			button -> {
 				ShhhHealthConfig config = ShhhHealthConfig.get();
 				config.showBosses = !config.showBosses;
-				ShhhHealthConfig.save();
 				button.setMessage(getBossMessage());
 			}
-		).width(151).build();
+		)
+		.tooltip(Tooltip.create(Component.translatable("shhh-mob-health-indicators.tooltip.show_bosses")))
+		.width(151)
+		.build();
 		row5.addChild(bossButton);
-		addRenderableWidget(bossButton);
 
 		Button namedOnlyButton = Button.builder(
 			getNamedOnlyMessage(),
 			button -> {
 				ShhhHealthConfig config = ShhhHealthConfig.get();
 				config.showNamedOnly = !config.showNamedOnly;
-				ShhhHealthConfig.save();
 				button.setMessage(getNamedOnlyMessage());
 			}
-		).width(151).build();
+		)
+		.tooltip(Tooltip.create(Component.translatable("shhh-mob-health-indicators.tooltip.show_named_only")))
+		.width(151)
+		.build();
 		row5.addChild(namedOnlyButton);
-		addRenderableWidget(namedOnlyButton);
 		content.addChild(row5);
 
 		// Row 6: Hide Full Health | Hide Invisible
@@ -157,27 +167,29 @@ public class ShhhHealthConfigScreen extends Screen {
 			button -> {
 				ShhhHealthConfig config = ShhhHealthConfig.get();
 				config.hideFullHealth = !config.hideFullHealth;
-				ShhhHealthConfig.save();
 				button.setMessage(getHideFullHealthMessage());
 			}
-		).width(151).build();
+		)
+		.tooltip(Tooltip.create(Component.translatable("shhh-mob-health-indicators.tooltip.hide_full_health")))
+		.width(151)
+		.build();
 		row6.addChild(hideFullHealthButton);
-		addRenderableWidget(hideFullHealthButton);
 
 		Button hideInvisibleButton = Button.builder(
 			getHideInvisibleMessage(),
 			button -> {
 				ShhhHealthConfig config = ShhhHealthConfig.get();
 				config.hideInvisible = !config.hideInvisible;
-				ShhhHealthConfig.save();
 				button.setMessage(getHideInvisibleMessage());
 			}
-		).width(151).build();
+		)
+		.tooltip(Tooltip.create(Component.translatable("shhh-mob-health-indicators.tooltip.hide_invisible")))
+		.width(151)
+		.build();
 		row6.addChild(hideInvisibleButton);
-		addRenderableWidget(hideInvisibleButton);
 		content.addChild(row6);
 
-		// Row 7: Max Distance Slider (Full Width)
+		// Row 7: Max Distance Slider (Full Width) - Note: save() deferred to onClose() to avoid disk churn during drag
 		double initialDist = (ShhhHealthConfig.get().maxDistance - 8.0) / (64.0 - 8.0);
 		AbstractSliderButton distanceSlider = new AbstractSliderButton(0, 0, 310, 20, CommonComponents.EMPTY, initialDist) {
 			@Override
@@ -190,13 +202,12 @@ public class ShhhHealthConfigScreen extends Screen {
 			protected void applyValue() {
 				float dist = 8.0f + (float) this.value * (64.0f - 8.0f);
 				ShhhHealthConfig.get().maxDistance = Math.round(dist);
-				ShhhHealthConfig.save();
 				updateMessage();
 			}
 		};
 		distanceSlider.setMessage(Component.translatable("shhh-mob-health-indicators.config.distance", Math.round(ShhhHealthConfig.get().maxDistance)));
+		distanceSlider.setTooltip(Tooltip.create(Component.translatable("shhh-mob-health-indicators.tooltip.distance")));
 		content.addChild(distanceSlider);
-		addRenderableWidget(distanceSlider);
 
 		// Row 8: Dynamic Color Grading (Full Width)
 		Button colorGradingButton = Button.builder(
@@ -204,19 +215,22 @@ public class ShhhHealthConfigScreen extends Screen {
 			button -> {
 				ShhhHealthConfig config = ShhhHealthConfig.get();
 				config.colorGrading = !config.colorGrading;
-				ShhhHealthConfig.save();
 				button.setMessage(getColorGradingMessage());
 			}
-		).width(310).build();
+		)
+		.tooltip(Tooltip.create(Component.translatable("shhh-mob-health-indicators.tooltip.color_grading")))
+		.width(310)
+		.build();
 		content.addChild(colorGradingButton);
-		addRenderableWidget(colorGradingButton);
 
 		this.layout.addToContents(content);
 
 		// Done Button in Footer
 		Button doneButton = Button.builder(CommonComponents.GUI_DONE, button -> onClose()).width(210).build();
 		this.layout.addToFooter(doneButton);
-		addRenderableWidget(doneButton);
+
+		// Register all widgets recursively into screen
+		this.layout.visitWidgets(this::addRenderableWidget);
 
 		repositionElements();
 	}

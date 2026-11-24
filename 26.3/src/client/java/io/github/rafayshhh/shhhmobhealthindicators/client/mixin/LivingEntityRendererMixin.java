@@ -2,6 +2,7 @@ package io.github.rafayshhh.shhhmobhealthindicators.client.mixin;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import io.github.rafayshhh.shhhmobhealthindicators.client.config.ShhhHealthConfig;
+import io.github.rafayshhh.shhhmobhealthindicators.client.health.HealthComponentBuilder;
 import io.github.rafayshhh.shhhmobhealthindicators.client.health.HealthInfo;
 import io.github.rafayshhh.shhhmobhealthindicators.client.health.HealthTracker;
 import io.github.rafayshhh.shhhmobhealthindicators.client.render.HealthRenderStateAccessor;
@@ -11,6 +12,7 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Avatar;
 import net.minecraft.world.entity.EntityAttachment;
 import net.minecraft.world.entity.LivingEntity;
@@ -35,15 +37,36 @@ public class LivingEntityRendererMixin {
 		require = 0
 	)
 	private void onExtractRenderState(LivingEntity entity, LivingEntityRenderState state, float tickDelta, CallbackInfo ci) {
+		HealthRenderStateAccessor accessor = (HealthRenderStateAccessor) state;
+
 		// Strictly ignore players and avatars
 		if (entity instanceof Player || entity instanceof Avatar || state instanceof AvatarRenderState) {
-			((HealthRenderStateAccessor) state).shhh$setHealthInfo(null);
+			accessor.shhh$setHealthInfo(null);
+			accessor.shhh$setHealthComponent(null);
 			return;
 		}
 
-		if (ShhhHealthConfig.get().enabled) {
-			HealthInfo info = HealthTracker.extract(entity);
-			((HealthRenderStateAccessor) state).shhh$setHealthInfo(info);
+		ShhhHealthConfig config = ShhhHealthConfig.get();
+		if (!config.enabled) {
+			accessor.shhh$setHealthInfo(null);
+			accessor.shhh$setHealthComponent(null);
+			return;
+		}
+
+		// Distance cutoff check at extraction time
+		float maxDist = config.maxDistance;
+		if (state.distanceToCameraSq > (maxDist * maxDist)) {
+			accessor.shhh$setHealthInfo(null);
+			accessor.shhh$setHealthComponent(null);
+			return;
+		}
+
+		HealthInfo info = HealthTracker.extract(entity);
+		accessor.shhh$setHealthInfo(info);
+
+		if (info != null) {
+			Component component = HealthComponentBuilder.build(info, config.preset, config);
+			accessor.shhh$setHealthComponent(component);
 
 			// Ensure nameTagAttachment is calculated for mobs without custom names
 			if (state.nameTagAttachment == null) {
@@ -55,7 +78,7 @@ public class LivingEntityRendererMixin {
 				}
 			}
 		} else {
-			((HealthRenderStateAccessor) state).shhh$setHealthInfo(null);
+			accessor.shhh$setHealthComponent(null);
 		}
 	}
 

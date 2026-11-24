@@ -51,7 +51,8 @@
   - **RPG / Hearts**: Dual heart count and HP readout (`❤ 10/10 Hearts  20/20 HP`).
 - **Positioning**: Configurable **Above Name Tag** *(Default)* or **Below Name Tag**.
 - **In-Game Settings Menu**: Built natively using vanilla layout components. Compatible with ModMenu.
-- **Streamlined Keybindings**:
+- **Streamlined Controls & Commands**:
   - `F12`: Toggle Mob Health Indicators ON/OFF.
   - `0`: Open Settings Screen.
+  - Client commands: `/mobhealth`, `/smhi`, `/shhhmobhealth` (`toggle`, `config`, `preset`, `status`, `help`).
 ```

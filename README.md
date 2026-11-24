@@ -66,8 +66,9 @@
 
 ---
 
-## ⌨️ Default Controls
+## ⌨️ Default Controls & Commands
 
+### Keybindings
 Keybindings can be rebound in **Options → Controls → Key Binds → Shhh Mob Health Indicators**:
 
 | Action | Default Key | Category | What it does |
@@ -77,6 +78,17 @@ Keybindings can be rebound in **Options → Controls → Key Binds → Shhh Mob 
 
 > [!NOTE]
 > Keybindings include built-in screen guards (`client.gui.screen() == null`), so pressing `0` while typing in chat, search bars, creative inventory, signs, or containers will never accidentally open the settings screen.
+
+### Client Commands
+You can also configure the mod via client-side chat commands (aliases: `/smhi`, `/shhhmobhealth`):
+
+| Command | Description |
+| :--- | :--- |
+| `/mobhealth` | Opens the configuration menu |
+| `/mobhealth toggle` | Toggles mob health indicators ON or OFF |
+| `/mobhealth preset <hearts\|compact\|bar\|numeric\|lifesteal>` | Quickly switches the active visual preset |
+| `/mobhealth status` | Displays active settings and filters in chat |
+| `/mobhealth help` | Shows available command arguments |
 
 ---
 

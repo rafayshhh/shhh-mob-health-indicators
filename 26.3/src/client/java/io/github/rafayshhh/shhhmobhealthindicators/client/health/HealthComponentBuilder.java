@@ -358,9 +358,11 @@ public class HealthComponentBuilder {
 	}
 
 	public static String formatNumber(float val) {
-		if (Math.abs(val - Math.round(val)) < 0.05f) {
-			return String.valueOf(Math.round(val));
+		int rounded = Math.round(val);
+		if (Math.abs(val - rounded) < 0.05f) {
+			return Integer.toString(rounded);
 		}
-		return String.format(Locale.ROOT, "%.1f", val);
+		int tenths = Math.round(val * 10.0f);
+		return (tenths / 10) + "." + Math.abs(tenths % 10);
 	}
 }

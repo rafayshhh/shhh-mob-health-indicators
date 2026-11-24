@@ -31,7 +31,15 @@ All notable changes to the "Shhh Mob Health Indicators" project will be document
 - **In-Game Settings Menu**:
   - Native Minecraft UI built with `HeaderAndFooterLayout` and responsive two-column layout.
   - ModMenu integration.
-- **Keybindings**:
+- **Keybindings & Client Commands**:
   - `F12`: Toggle Mob Health Indicators ON/OFF.
   - `0`: Open Settings Menu.
+  - Client commands: `/mobhealth`, `/smhi`, `/shhhmobhealth` (`toggle`, `config`, `preset`, `status`, `help`).
   - Includes chat/screen guards to prevent accidental menu triggers while typing.
+- **Performance & Engine Optimizations**:
+  - **Extraction-Time Distance Culling**: Skips health tracking entirely for entities beyond `maxDistance`.
+  - **Pre-Built Render Components**: Text formatting and components are generated during extraction, enabling zero object allocations in `submit`.
+  - **Fast Integer Math**: Replaced slow `String.format` with fast integer arithmetic formatting.
+  - **Memory Eviction**: Hooks `ClientEntityEvents.ENTITY_UNLOAD` and `ClientPlayConnectionEvents.DISCONNECT` to prevent UUID accumulation.
+  - **Instant Lethal Eviction**: Instantly removes indicators on mob lethal hits (`isDeadOrDying() || health <= 0`).
+  - **Deferred Slider Save**: Eliminates disk I/O churn while dragging the distance slider.

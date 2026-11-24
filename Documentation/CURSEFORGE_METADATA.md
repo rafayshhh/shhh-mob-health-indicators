@@ -29,7 +29,8 @@ Overhead mob health indicators with authentic heart textures, RPG tiered hearts 
   <li><strong>Multiple Presets:</strong> Classic Hearts (default), Compact (❤ 20/20), Health Bar, Minimal Numeric, and RPG / Hearts.</li>
   <li><strong>Smart Category Filters:</strong> Independent toggles for Hostile Mobs, Passive Mobs, and Bosses, plus Named-Only and Hide-at-100%-HP filters.</li>
   <li><strong>Positioning:</strong> Display Above Name Tag (default) or Below Name Tag.</li>
-  <li><strong>In-Game Settings:</strong> Responsive two-column vanilla UI (ModMenu compatible).</li>
+  <li><strong>In-Game Settings & Commands:</strong> Responsive two-column vanilla UI (ModMenu compatible) plus full client-side commands: <code>/mobhealth</code> (or <code>/smhi</code>).</li>
   <li><strong>Keybindings:</strong> <code>F12</code> to toggle ON/OFF, <code>0</code> to open Settings.</li>
+  <li><strong>High Performance:</strong> Zero allocations in the render submission loop, extraction-time distance culling, automatic memory leak prevention, and immediate death cleanup.</li>
 </ul>
 ```

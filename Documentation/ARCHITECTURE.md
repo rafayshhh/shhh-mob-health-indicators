@@ -8,25 +8,28 @@
 ### 1. Dedicated Mob Health Resolution Engine (`HealthTracker`)
 - **Mob-Specific Targeting**: Directly extracts health from `LivingEntity` instances (`entity.getHealth()`, `getMaxHealth()`, `getAbsorptionAmount()`).
 - **Strict Player Exclusion**: Explicitly checks `entity instanceof Player || entity instanceof Avatar` and returns `null`, preventing any indicator collision with player health indicator mods.
+- **Immediate Lethal Hit Eviction**: Automatically removes health indicators when `entity.isDeadOrDying() || !entity.isAlive() || health <= 0`, eliminating floating indicators over dying corpse animations.
 - **Entity Type Filtering**:
   - Distinguishes **Hostile Mobs** (`entity instanceof Enemy`), **Passive Mobs** (`Animal`, `Villager`, etc.), and **Boss Mobs** (`WitherBoss`, `EnderDragon`, `Warden`, `ElderGuardian`).
   - Supports user-configurable toggles for each category.
   - Supports **Named Only** mode to only render on mobs with custom name tags.
   - Supports **Hide at 100% HP** to reduce HUD clutter in busy farms or mob spawners.
   - Supports **Hide Invisible** when mobs have active invisibility status effects.
-- **Adaptive Max Health Memory Cache**: Tracks and retains observed highest health for mobs with dynamically boosted or custom attribute health pools.
+- **Adaptive Max Health Memory Cache & Event-Driven Eviction**: Tracks and retains observed highest health for mobs with dynamically boosted health pools. Cleans up stale entries via `ClientEntityEvents.ENTITY_UNLOAD` and resets on `ClientPlayConnectionEvents.DISCONNECT` to prevent memory leaks.
 
-### 2. Minecraft 26.3 RenderState Pipeline & Duck Typing
+### 2. Minecraft 26.3 RenderState Pipeline & Performance Optimizations
 In modern Minecraft (1.21.2+ / 26.3), rendering is split into two phases:
 1. **Extraction (`LivingEntityRenderer.extractRenderState`)**:
    - `LivingEntityRendererMixin` intercepts the tail of extraction.
+   - **Distance Culling**: Checks `state.distanceToCameraSq > (maxDist * maxDist)` and bails out before running entity extraction for distant mobs.
    - Verifies the entity is not a player or avatar.
    - Extracts `HealthInfo` and assigns it via `HealthRenderStateAccessor` duck-typing interface to `LivingEntityRenderState`.
+   - **Component Pre-Building**: Formats and pre-builds the `Component` during extraction, caching it directly on the render state.
    - Computes `state.nameTagAttachment` via `entity.getAttachments().getNullable(EntityAttachment.NAME_TAG, 0, yRot)` with automated fallback to `new Vec3(0.0, state.boundingBoxHeight + 0.5, 0.0)` for mobs without vanilla nametags.
-   - Zero object allocations during rendering.
 2. **Submission (`LivingEntityRenderer.submit`)**:
    - `LivingEntityRendererMixin` intercepts the tail of entity model and layer submission.
    - Delegates to `HealthRenderer.render(...)`.
+   - Directly consumes the pre-built `Component` with **zero object allocations, zero string formatting, and zero regex/regex-like parsing** inside the render loop.
    - Uses Minecraft's official `SubmitNodeCollector.submitNameTag` with billboard orientation, lighting, depth, and distance scaling.
    - Respects shaders, Sodium, and Iris by staying within the official submission pipeline.
 
@@ -54,12 +57,13 @@ In modern Minecraft (1.21.2+ / 26.3), rendering is split into two phases:
   - Seamlessly integrates into `submitNameTag`: respects billboard rotation, lighting, distance scaling, and automatic text background box padding with zero extra draw calls.
 - **Heart Texture Styles**: Configurable via settings (`Vanilla (Textured)`, `Hardcore (Textured)`, `Unicode (❤)`).
 
-### 5. In-Game Settings UI (`ShhhHealthConfigScreen`)
+### 5. In-Game Settings UI (`ShhhHealthConfigScreen`) & Commands
 - Built using vanilla Minecraft's `HeaderAndFooterLayout` and responsive two-column `LinearLayout` without external GUI dependencies.
-- Toggle buttons with `CommonComponents.optionStatus`.
-- Distance slider (`AbstractSliderButton` from 8m to 64m).
+- Toggle buttons with `CommonComponents.optionStatus` and comprehensive `Tooltip` guidance.
+- Distance slider (`AbstractSliderButton` from 8m to 64m) with deferred saving to prevent disk churn during dragging.
 - Cycle buttons for Presets, Positioning, and Heart Texture Styles.
 - Integrated into ModMenu via `ModMenuIntegration`.
+- **Client Commands (`MobHealthCommand`)**: Accessible via `/mobhealth`, `/smhi`, and `/shhhmobhealth` (`toggle`, `config`, `preset <type>`, `status`, `help`).
 
 ### 6. SpongePowered Mixin Class Loading Isolation
 - **Package Separation**: Interface duck typing definitions (such as `HealthRenderStateAccessor`) are strictly placed in non-mixin packages (`client.render`) rather than `client.mixin`. In modern SpongePowered Mixin, referencing a class directly from a mixin package throws an `IllegalClassLoadError`.
