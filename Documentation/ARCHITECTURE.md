@@ -1,7 +1,7 @@
-# Architecture & Design - Shhh Mob Health Indicators (26.3)
+# Architecture & Design - Customizable Mobs Health Indicator (26.3)
 
 ## Overview
-**Shhh Mob Health Indicators** is a lightweight, performance-critical client-side Fabric mod for Minecraft 26.3. It renders overhead health indicators (hearts, compact text, bar, and minimal numbers) above mob models in 3D world space.
+**Customizable Mobs Health Indicator** is a lightweight, performance-critical client-side Fabric mod for Minecraft 26.3. It renders overhead health indicators (hearts, compact text, bar, and minimal numbers) above mob models in 3D world space.
 
 ## Key Subsystems
 
@@ -52,18 +52,18 @@ In modern Minecraft (1.21.2+ / 26.3), rendering is split into two phases:
   - `\uE004`: Golden Apple Absorption Half Heart
   - `\uE005`–`\uE008`: RPG Tiers 2–5 Hearts (Radiant Gold, Emerald Lime, Diamond Cyan, Ender Magenta)
   - `\uE009`–`\uE00B`: Hardcore Hearts & Container
-- **Font Integration (`assets/shhh-mob-health-indicators/font/hearts.json` & `assets/minecraft/font/default.json`)**:
+- **Font Integration (`assets/customizable-mobs-health-indicator/font/hearts.json` & `assets/minecraft/font/default.json`)**:
   - Registered via Minecraft's official bitmap font provider with `height: 9, ascent: 7`.
   - Seamlessly integrates into `submitNameTag`: respects billboard rotation, lighting, distance scaling, and automatic text background box padding with zero extra draw calls.
 - **Heart Texture Styles**: Configurable via settings (`Vanilla (Textured)`, `Hardcore (Textured)`, `Unicode (❤)`).
 
-### 5. In-Game Settings UI (`ShhhHealthConfigScreen`) & Commands
+### 5. In-Game Settings UI (`CustomizableHealthConfigScreen`) & Commands
 - Built using vanilla Minecraft's `HeaderAndFooterLayout` and responsive two-column `LinearLayout` without external GUI dependencies.
 - Toggle buttons with `CommonComponents.optionStatus` and comprehensive `Tooltip` guidance.
 - Distance slider (`AbstractSliderButton` from 8m to 64m) with deferred saving to prevent disk churn during dragging.
 - Cycle buttons for Presets, Positioning, and Heart Texture Styles.
 - Integrated into ModMenu via `ModMenuIntegration`.
-- **Client Commands (`MobHealthCommand`)**: Accessible via `/mobhealth`, `/smhi`, and `/shhhmobhealth` (`toggle`, `config`, `preset <type>`, `status`, `help`).
+- **Client Commands (`MobHealthCommand`)**: Accessible via `/mobhealth`, `/cmhi`, and `/custommobhealth` (`toggle`, `config`, `preset <type>`, `status`, `help`).
 
 ### 6. SpongePowered Mixin Class Loading Isolation
 - **Package Separation**: Interface duck typing definitions (such as `HealthRenderStateAccessor`) are strictly placed in non-mixin packages (`client.render`) rather than `client.mixin`. In modern SpongePowered Mixin, referencing a class directly from a mixin package throws an `IllegalClassLoadError`.

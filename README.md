@@ -1,13 +1,13 @@
 <div align="center">
 
-<img src="Assets/icon.png" alt="Shhh Mob Health Indicators Icon" width="128" height="128" />
+<img src="Assets/icon.png" alt="Customizable Mobs Health Indicator Icon" width="128" height="128" />
 
-# Shhh Mob Health Indicators
+# Customizable Mobs Health Indicator
 
 **A modern, client-side Fabric mod for Minecraft 26.3 featuring authentic pixel-art heart textures, RPG tiered hearts for high-health bosses, category filtering (hostile, passive, boss), 5 visual presets, and an in-game settings menu.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](LICENSE)
-[![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?style=flat-square&logo=github)](https://github.com/rafayshhh/shhh-mob-health-indicators)
+[![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?style=flat-square&logo=github)](https://github.com/rafayshhh/customizable-mobs-health-indicator)
 [![Minecraft 26.3](https://img.shields.io/badge/Minecraft-26.3-green?style=flat-square)](https://fabricmc.net)
 [![Modloader: Fabric](https://img.shields.io/badge/Modloader-Fabric-dbb884?style=flat-square)](https://fabricmc.net)
 
@@ -31,7 +31,7 @@
 
 - **Mob-Dedicated Health Engine**:
   - Exclusively targets living mobs, monsters, animals, and bosses (`LivingEntity`).
-  - **Zero Player Interference**: Completely excludes all players and avatars (`Avatar` / `Player`), ensuring 100% seamless coexistence with player indicator mods like *Shhh Player Health Indicators*.
+  - **Zero Player Interference**: Completely excludes all players and avatars (`Avatar` / `Player`), ensuring 100% seamless coexistence with player indicator mods.
   - Excludes non-mob entities like Armor Stands.
 - **Authentic 9x9 Pixel-Art Heart Sprites**:
   - Replaces flat unicode text glyphs with true 9x9 pixel-art Minecraft heart sprites generated directly from official vanilla assets.
@@ -69,18 +69,18 @@
 ## ⌨️ Default Controls & Commands
 
 ### Keybindings
-Keybindings can be rebound in **Options → Controls → Key Binds → Shhh Mob Health Indicators**:
+Keybindings can be rebound in **Options → Controls → Key Binds → Customizable Mobs Health Indicator**:
 
 | Action | Default Key | Category | What it does |
 | :--- | :---: | :--- | :--- |
-| **Toggle Mob Health Indicators** | <kbd>F12</kbd> | Shhh Mob Health Indicators | Quickly turns mob indicators ON or OFF |
-| **Open Mob Health Settings Screen** | <kbd>0</kbd> | Shhh Mob Health Indicators | Opens the in-game configuration menu |
+| **Toggle Mob Health Indicators** | <kbd>F12</kbd> | Customizable Mobs Health Indicator | Quickly turns mob indicators ON or OFF |
+| **Open Mob Health Settings Screen** | <kbd>0</kbd> | Customizable Mobs Health Indicator | Opens the in-game configuration menu |
 
 > [!NOTE]
 > Keybindings include built-in screen guards (`client.gui.screen() == null`), so pressing `0` while typing in chat, search bars, creative inventory, signs, or containers will never accidentally open the settings screen.
 
 ### Client Commands
-You can also configure the mod via client-side chat commands (aliases: `/smhi`, `/shhhmobhealth`):
+You can also configure the mod via client-side chat commands (aliases: `/cmhi`, `/custommobhealth`):
 
 | Command | Description |
 | :--- | :--- |
@@ -110,14 +110,14 @@ Access the configuration menu by pressing **`0`** in-game or via **Mod Menu**:
 - **Max Distance**: Slider from 8m to 64m (default: 32m).
 - **Dynamic Color Grading**: Color shifts dynamically based on remaining health percentage.
 
-Settings are saved to `.minecraft/config/shhh-mob-health-indicators.json` with automatic corruption recovery.
+Settings are saved to `.minecraft/config/customizable-mobs-health-indicator.json` with automatic corruption recovery.
 
 ---
 
 ## 📂 Repository Structure
 
 ```text
-Shhh Mob Health Indicators/
+Customizable Mobs Health Indicator/
 ├── 26.3/                     # Minecraft 26.3 Fabric mod project (Java 25)
 │   ├── src/                  # Client source code, mixins, and resources
 │   │   ├── client/           # Client-side renderers, GUI screens, and health tracker
@@ -136,7 +136,7 @@ Shhh Mob Health Indicators/
 
 - **Created by**: **RafayShhh**
   - GitHub: [@rafayshhh](https://github.com/rafayshhh)
-  - Repository: [shhh-mob-health-indicators](https://github.com/rafayshhh/shhh-mob-health-indicators)
+  - Repository: [customizable-mobs-health-indicator](https://github.com/rafayshhh/customizable-mobs-health-indicator)
 
 ---
 

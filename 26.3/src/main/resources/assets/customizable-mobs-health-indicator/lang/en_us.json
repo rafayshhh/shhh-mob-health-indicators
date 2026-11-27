@@ -1,0 +1,56 @@
+{
+	"modmenu.nameTranslation.customizable-mobs-health-indicator": "Customizable Mobs Health Indicator",
+	"modmenu.descriptionTranslation.customizable-mobs-health-indicator": "A fully customizable mob health indicator mod with multiple visual presets, RPG tiered hearts, and comprehensive mob category filtering.",
+
+	"key.category.customizable-mobs-health-indicator.main": "Customizable Mobs Health Indicator",
+	"key.customizable-mobs-health-indicator.toggle": "Toggle Mob Health Indicators",
+	"key.customizable-mobs-health-indicator.settings": "Open Mob Health Settings Screen",
+
+	"customizable-mobs-health-indicator.config.title": "Customizable Mobs Health Indicator Settings",
+	"customizable-mobs-health-indicator.config.enabled": "Mob Indicators",
+	"customizable-mobs-health-indicator.config.preset": "Preset",
+	"customizable-mobs-health-indicator.config.position": "Position",
+	"customizable-mobs-health-indicator.config.heart_texture": "Heart Texture",
+	"customizable-mobs-health-indicator.config.show_absorption": "Absorption",
+	"customizable-mobs-health-indicator.config.show_hostile": "Hostile Mobs",
+	"customizable-mobs-health-indicator.config.show_passive": "Passive Mobs",
+	"customizable-mobs-health-indicator.config.show_bosses": "Boss Mobs",
+	"customizable-mobs-health-indicator.config.show_named_only": "Named Only",
+	"customizable-mobs-health-indicator.config.hide_full_health": "Hide at 100% HP",
+	"customizable-mobs-health-indicator.config.hide_invisible": "Hide Invisible",
+	"customizable-mobs-health-indicator.config.distance": "Max Distance: %dm",
+	"customizable-mobs-health-indicator.config.color_grading": "Dynamic Color Grading",
+
+	"customizable-mobs-health-indicator.tooltip.enabled": "Master switch to turn all mob health indicators ON or OFF.",
+	"customizable-mobs-health-indicator.tooltip.preset": "Cycle through visual display styles (Hearts, Compact, Bar, Numeric, RPG).",
+	"customizable-mobs-health-indicator.tooltip.position": "Position indicator above or below the mob's nameplate.",
+	"customizable-mobs-health-indicator.tooltip.heart_texture": "Choose between authentic Vanilla pixel-art, Hardcore, or Unicode hearts.",
+	"customizable-mobs-health-indicator.tooltip.show_absorption": "Display golden absorption hearts from effects or golden apples.",
+	"customizable-mobs-health-indicator.tooltip.show_hostile": "Toggle health indicators for monsters and hostile enemies.",
+	"customizable-mobs-health-indicator.tooltip.show_passive": "Toggle health indicators for animals and peaceful creatures.",
+	"customizable-mobs-health-indicator.tooltip.show_bosses": "Toggle health indicators for bosses (Wither, Warden, Elder Guardian, etc.).",
+	"customizable-mobs-health-indicator.tooltip.show_named_only": "Only show indicators on mobs that have been named with a Name Tag.",
+	"customizable-mobs-health-indicator.tooltip.hide_full_health": "Hide indicators for unharmed mobs at 100% health to reduce clutter.",
+	"customizable-mobs-health-indicator.tooltip.hide_invisible": "Hide indicators when mobs have active invisibility status effects.",
+	"customizable-mobs-health-indicator.tooltip.distance": "Maximum distance in blocks to display mob health indicators.",
+	"customizable-mobs-health-indicator.tooltip.color_grading": "Dynamically shift health color from green to red based on remaining HP.",
+
+	"customizable-mobs-health-indicator.heart_texture.vanilla": "Vanilla (Textured)",
+	"customizable-mobs-health-indicator.heart_texture.hardcore": "Hardcore (Textured)",
+	"customizable-mobs-health-indicator.heart_texture.unicode": "Unicode (❤)",
+
+	"customizable-mobs-health-indicator.preset.hearts": "Classic Hearts",
+	"customizable-mobs-health-indicator.preset.compact": "Compact (❤ 20/20)",
+	"customizable-mobs-health-indicator.preset.bar": "Health Bar [██████]",
+	"customizable-mobs-health-indicator.preset.numeric": "Minimal (20 HP)",
+	"customizable-mobs-health-indicator.preset.lifesteal": "RPG / Hearts (10/10)",
+
+	"customizable-mobs-health-indicator.position.above": "Above Name Tag",
+	"customizable-mobs-health-indicator.position.below": "Below Name Tag",
+
+	"customizable-mobs-health-indicator.feedback.enabled": "Mob Health Indicators: ON (%s)",
+	"customizable-mobs-health-indicator.feedback.disabled": "Mob Health Indicators: OFF",
+
+	"customizable-mobs-health-indicator.command.preset_changed": "Mob health preset set to",
+	"customizable-mobs-health-indicator.command.invalid_preset": "Invalid preset '%s'. Available: hearts, compact, bar, numeric, lifesteal"
+}

@@ -14,7 +14,7 @@
     },
     {
       "type": "bitmap",
-      "file": "shhh-mob-health-indicators:font/hearts.png",
+      "file": "customizable-mobs-health-indicator:font/hearts.png",
       "ascent": 7,
       "height": 9,
       "chars": [

@@ -1,23 +1,23 @@
-# Socials & Branding - Shhh Mob Health Indicators
+# Socials & Branding - Customizable Mobs Health Indicator
 
 ## Social Media Announcement Template
 
 ### Twitter / X & Threads
 ```text
-Introducing Shhh Mob Health Indicators for Minecraft Fabric 26.3! 🧟💖
+Introducing Customizable Mobs Health Indicator for Minecraft Fabric 26.3! 🧟💖
 
 ✨ Clean overhead indicators for monsters, animals & bosses
 ✨ Authentic 9x9 pixel-art heart sprites & RPG tiered hearts
 ✨ Filters for Hostile, Passive, Bosses, and Named-only mobs
 ✨ Hide at 100% HP to reduce farm & spawner clutter
-✨ 100% compatible alongside Shhh Player Health Indicators
+✨ 100% client-side with zero player interference
 
-Download now: https://github.com/rafayshhh/shhh-mob-health-indicators
+Download now: https://github.com/rafayshhh/customizable-mobs-health-indicator
 ```
 
 ### Discord Release Post
 ```markdown
-**Shhh Mob Health Indicators v1.0.0 is now available!**
+**Customizable Mobs Health Indicator v1.0.0 is now available!**
 
 An upgraded, client-side mob health indicator mod built for Minecraft 26.3 on Fabric.
 
@@ -30,5 +30,5 @@ An upgraded, client-side mob health indicator mod built for Minecraft 26.3 on Fa
 - ⌨️ Streamlined Keybinds: `F12` to toggle, `0` for settings
 - ⚡ Optimized Performance: Zero-allocation submit loop, distance culling & instant death cleanup
 
-**Repository**: https://github.com/rafayshhh/shhh-mob-health-indicators
+**Repository**: https://github.com/rafayshhh/customizable-mobs-health-indicator
 ```

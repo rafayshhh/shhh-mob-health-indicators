@@ -1,0 +1,12 @@
+{
+	"required": true,
+	"package": "io.github.rafayshhh.customizablemobshealthindicator.client.mixin",
+	"compatibilityLevel": "JAVA_25",
+	"client": [
+		"LivingEntityRenderStateMixin",
+		"LivingEntityRendererMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

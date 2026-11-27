@@ -1,10 +1,10 @@
 # CurseForge Project Metadata & Setup Guide
 
-- **Project Name**: Shhh Mob Health Indicators
+- **Project Name**: Customizable Mobs Health Indicator
 - **Category**: Cosmetic, Utility, Mobs
 - **Mod Loader**: Fabric
 - **Minecraft Version**: 26.3
-- **Primary Website**: https://github.com/rafayshhh/shhh-mob-health-indicators
+- **Primary Website**: https://github.com/rafayshhh/customizable-mobs-health-indicator
 
 ---
 
@@ -16,7 +16,7 @@ Overhead mob health indicators with authentic heart textures, RPG tiered hearts 
 ## Description (HTML / Rich Text for CurseForge)
 
 ```html
-<h1>Shhh Mob Health Indicators</h1>
+<h1>Customizable Mobs Health Indicator</h1>
 <p><strong>A modern, customizable client-side Fabric mod that displays overhead health indicators for monsters, animals, and bosses with authentic heart textures, multiple visual presets, and zero player interference.</strong></p>
 
 <hr/>
@@ -29,7 +29,7 @@ Overhead mob health indicators with authentic heart textures, RPG tiered hearts 
   <li><strong>Multiple Presets:</strong> Classic Hearts (default), Compact (❤ 20/20), Health Bar, Minimal Numeric, and RPG / Hearts.</li>
   <li><strong>Smart Category Filters:</strong> Independent toggles for Hostile Mobs, Passive Mobs, and Bosses, plus Named-Only and Hide-at-100%-HP filters.</li>
   <li><strong>Positioning:</strong> Display Above Name Tag (default) or Below Name Tag.</li>
-  <li><strong>In-Game Settings & Commands:</strong> Responsive two-column vanilla UI (ModMenu compatible) plus full client-side commands: <code>/mobhealth</code> (or <code>/smhi</code>).</li>
+  <li><strong>In-Game Settings & Commands:</strong> Responsive two-column vanilla UI (ModMenu compatible) plus full client-side commands: <code>/mobhealth</code> (or <code>/cmhi</code>).</li>
   <li><strong>Keybindings:</strong> <code>F12</code> to toggle ON/OFF, <code>0</code> to open Settings.</li>
   <li><strong>High Performance:</strong> Zero allocations in the render submission loop, extraction-time distance culling, automatic memory leak prevention, and immediate death cleanup.</li>
 </ul>

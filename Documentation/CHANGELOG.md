@@ -1,10 +1,10 @@
 # Changelog
 
-All notable changes to the "Shhh Mob Health Indicators" project will be documented in this file.
+All notable changes to the "Customizable Mobs Health Indicator" project will be documented in this file.
 
 ## [1.0.0] - Official Release - Modern Overhead Mob Health Indicators for Fabric 26.3
 
-**Shhh Mob Health Indicators v1.0.0** is the debut release for Minecraft 26.3 on Fabric (Client-Only).
+**Customizable Mobs Health Indicator v1.0.0** is the debut release for Minecraft 26.3 on Fabric (Client-Only).
 
 ### Highlights & Core Features:
 - **Mob-Specific Overhead Health Indicators**:
@@ -34,7 +34,7 @@ All notable changes to the "Shhh Mob Health Indicators" project will be document
 - **Keybindings & Client Commands**:
   - `F12`: Toggle Mob Health Indicators ON/OFF.
   - `0`: Open Settings Menu.
-  - Client commands: `/mobhealth`, `/smhi`, `/shhhmobhealth` (`toggle`, `config`, `preset`, `status`, `help`).
+  - Client commands: `/mobhealth`, `/cmhi`, `/custommobhealth` (`toggle`, `config`, `preset`, `status`, `help`).
   - Includes chat/screen guards to prevent accidental menu triggers while typing.
 - **Performance & Engine Optimizations**:
   - **Extraction-Time Distance Culling**: Skips health tracking entirely for entities beyond `maxDistance`.

@@ -14,7 +14,7 @@ loom {
 	splitEnvironmentSourceSets()
 
 	mods {
-		"shhh-mob-health-indicators" {
+		"customizable-mobs-health-indicator" {
 			sourceSet sourceSets.main
 			sourceSet sourceSets.client
 		}

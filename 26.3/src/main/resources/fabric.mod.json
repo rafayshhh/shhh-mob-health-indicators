@@ -1,31 +1,31 @@
 {
 	"schemaVersion": 1,
-	"id": "shhh-mob-health-indicators",
+	"id": "customizable-mobs-health-indicator",
 	"version": "${version}",
-	"name": "Shhh Mob Health Indicators",
-	"description": "An upgraded mob health indicator mod for Minecraft.",
+	"name": "Customizable Mobs Health Indicator",
+	"description": "A fully customizable overhead mob health indicator mod for Minecraft.",
 	"authors": [
 		"RafayShhh"
 	],
 	"contact": {
-		"homepage": "https://github.com/RafayShhh/shhh-mob-health-indicators",
-		"sources": "https://github.com/RafayShhh/shhh-mob-health-indicators",
-		"issues": "https://github.com/RafayShhh/shhh-mob-health-indicators/issues"
+		"homepage": "https://github.com/rafayshhh/customizable-mobs-health-indicator",
+		"sources": "https://github.com/rafayshhh/customizable-mobs-health-indicator",
+		"issues": "https://github.com/rafayshhh/customizable-mobs-health-indicator/issues"
 	},
 	"license": "MIT",
-	"icon": "assets/shhh-mob-health-indicators/icon.png",
+	"icon": "assets/customizable-mobs-health-indicator/icon.png",
 	"environment": "client",
 	"entrypoints": {
 		"client": [
-			"io.github.rafayshhh.shhhmobhealthindicators.client.ShhhMobHealthIndicatorsClient"
+			"io.github.rafayshhh.customizablemobshealthindicator.client.CustomizableMobsHealthIndicatorClient"
 		],
 		"modmenu": [
-			"io.github.rafayshhh.shhhmobhealthindicators.client.integration.ModMenuIntegration"
+			"io.github.rafayshhh.customizablemobshealthindicator.client.integration.ModMenuIntegration"
 		]
 	},
 	"mixins": [
 		{
-			"config": "shhh-mob-health-indicators.client.mixins.json",
+			"config": "customizable-mobs-health-indicator.client.mixins.json",
 			"environment": "client"
 		}
 	],

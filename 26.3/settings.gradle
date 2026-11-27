@@ -10,4 +10,4 @@ pluginManagement {
 }
 
 // Should match your modid
-rootProject.name = 'shhh-mob-health-indicators'
+rootProject.name = 'customizable-mobs-health-indicator'
