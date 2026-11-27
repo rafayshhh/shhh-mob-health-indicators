@@ -50,7 +50,6 @@ public class CustomizableHealthConfig {
 	public boolean hideFullHealth = false;
 	public boolean hideInvisible = true;
 	public float maxDistance = 32.0f;
-	public int maxHeartRows = 3;
 	public boolean colorGrading = true;
 
 	// State tracking for dirty-check saving
@@ -66,7 +65,6 @@ public class CustomizableHealthConfig {
 	private transient boolean lastSavedHideFullHealth = false;
 	private transient boolean lastSavedHideInvisible = true;
 	private transient float lastSavedMaxDistance = 32.0f;
-	private transient int lastSavedMaxHeartRows = 3;
 	private transient boolean lastSavedColorGrading = true;
 	private transient boolean isInitialized = false;
 
@@ -127,7 +125,6 @@ public class CustomizableHealthConfig {
 		instance.lastSavedHideFullHealth = instance.hideFullHealth;
 		instance.lastSavedHideInvisible = instance.hideInvisible;
 		instance.lastSavedMaxDistance = instance.maxDistance;
-		instance.lastSavedMaxHeartRows = instance.maxHeartRows;
 		instance.lastSavedColorGrading = instance.colorGrading;
 		instance.isInitialized = true;
 
@@ -156,7 +153,6 @@ public class CustomizableHealthConfig {
 			&& instance.hideFullHealth == instance.lastSavedHideFullHealth
 			&& instance.hideInvisible == instance.lastSavedHideInvisible
 			&& Math.abs(instance.maxDistance - instance.lastSavedMaxDistance) < 0.01f
-			&& instance.maxHeartRows == instance.lastSavedMaxHeartRows
 			&& instance.colorGrading == instance.lastSavedColorGrading) {
 			return;
 		}
@@ -187,7 +183,6 @@ public class CustomizableHealthConfig {
 			instance.lastSavedHideFullHealth = instance.hideFullHealth;
 			instance.lastSavedHideInvisible = instance.hideInvisible;
 			instance.lastSavedMaxDistance = instance.maxDistance;
-			instance.lastSavedMaxHeartRows = instance.maxHeartRows;
 			instance.lastSavedColorGrading = instance.colorGrading;
 			instance.isInitialized = true;
 		} catch (Exception e) {
@@ -206,6 +201,5 @@ public class CustomizableHealthConfig {
 			config.heartTexture = HeartTextureStyle.VANILLA;
 		}
 		config.maxDistance = Math.clamp(config.maxDistance, 8.0f, 64.0f);
-		config.maxHeartRows = Math.clamp(config.maxHeartRows, 1, 5);
 	}
 }

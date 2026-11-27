@@ -19,7 +19,6 @@
 	"customizable-mobs-health-indicator.config.hide_full_health": "Hide at 100% HP",
 	"customizable-mobs-health-indicator.config.hide_invisible": "Hide Invisible",
 	"customizable-mobs-health-indicator.config.distance": "Max Distance: %dm",
-	"customizable-mobs-health-indicator.config.max_rows": "Max Rows: %d",
 	"customizable-mobs-health-indicator.config.color_grading": "Dynamic Color Grading",
 
 	"customizable-mobs-health-indicator.tooltip.enabled": "Master switch to turn all mob health indicators ON or OFF.",
@@ -34,7 +33,6 @@
 	"customizable-mobs-health-indicator.tooltip.hide_full_health": "Hide indicators for unharmed mobs at 100% health to reduce clutter.",
 	"customizable-mobs-health-indicator.tooltip.hide_invisible": "Hide indicators when mobs have active invisibility status effects.",
 	"customizable-mobs-health-indicator.tooltip.distance": "Maximum distance in blocks to display mob health indicators.",
-	"customizable-mobs-health-indicator.tooltip.max_rows": "Maximum number of stacked heart rows to display (1 to 5).",
 	"customizable-mobs-health-indicator.tooltip.color_grading": "Dynamically shift health color from green to red based on remaining HP.",
 
 	"customizable-mobs-health-indicator.heart_texture.vanilla": "Vanilla (Textured)",
@@ -59,7 +57,6 @@
 	"customizable-mobs-health-indicator.command.position_changed": "Indicator position set to: %s",
 	"customizable-mobs-health-indicator.command.texture_changed": "Heart texture style set to: %s",
 	"customizable-mobs-health-indicator.command.distance_changed": "Max render distance set to: %d blocks",
-	"customizable-mobs-health-indicator.command.max_rows_changed": "Max heart rows set to: %d",
 	"customizable-mobs-health-indicator.command.absorption_status": "Absorption hearts: %s",
 	"customizable-mobs-health-indicator.command.hostile_status": "Hostile mobs: %s",
 	"customizable-mobs-health-indicator.command.passive_status": "Passive mobs: %s",

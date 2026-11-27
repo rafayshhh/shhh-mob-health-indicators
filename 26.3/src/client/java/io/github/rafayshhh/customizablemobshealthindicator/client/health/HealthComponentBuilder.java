@@ -114,10 +114,9 @@ public class HealthComponentBuilder {
 	/**
 	 * Preset 1: Classic Hearts - Multi-Row Grid Builder (10 Hearts Per Row).
 	 * Formats hearts into rows of up to 10 hearts.
-	 * When entity has > 10 hearts (high health or absorption), extra hearts
-	 * stack into row 2, row 3, etc.
-	 * In a multi-row display, partial rows are padded on the right with SPRITE_SPACER (\uE00F)
-	 * so every row has an identical width and aligns perfectly on the left.
+	 * Displays each mob's exact actual number of hearts (e.g. 2 for chicken, 5 for cow, 50 for iron golem).
+	 * Does not pad to 10 containers for mobs with < 10 hearts.
+	 * When entity has > 10 hearts, extra hearts wrap into row 2, row 3, etc. without row capping.
 	 */
 	public static List<Component> buildHeartRows(HealthInfo info, CustomizableHealthConfig config) {
 		if (info == null) {
@@ -130,7 +129,7 @@ public class HealthComponentBuilder {
 
 		int fullHearts = (int) (health / 2.0f);
 		boolean halfHeart = (health % 2.0f) >= 0.5f;
-		int totalContainers = Math.max(10, (int) Math.ceil(maxHealth / 2.0f));
+		int totalContainers = Math.max(1, (int) Math.ceil(maxHealth / 2.0f));
 
 		int goldFullHearts = (int) (absorption / 2.0f);
 		boolean goldHalfHeart = (absorption % 2.0f) >= 0.5f;
@@ -194,29 +193,17 @@ public class HealthComponentBuilder {
 			return List.of();
 		}
 
-		int maxRows = Math.clamp(config.maxHeartRows, 1, 5);
 		int totalSlots = slotComponents.size();
-		int rowCount = Math.min(maxRows, (int) Math.ceil(totalSlots / 10.0));
+		int rowCount = (int) Math.ceil(totalSlots / 10.0);
 
 		List<Component> rows = new ArrayList<>(rowCount);
 		for (int r = 0; r < rowCount; r++) {
 			MutableComponent row = Component.empty();
 			int startIdx = r * 10;
 			int endIdx = Math.min(startIdx + 10, totalSlots);
-			int inThisRow = 0;
 
 			for (int i = startIdx; i < endIdx; i++) {
 				row.append(slotComponents.get(i));
-				inThisRow++;
-			}
-
-			// In a multi-row display, pad partial rows on the right to 10 slots with SPRITE_SPACER
-			// so that each row is 10 slots wide and aligns perfectly on the left.
-			if (rowCount > 1 && inThisRow < 10) {
-				int spacersNeeded = 10 - inThisRow;
-				for (int s = 0; s < spacersNeeded; s++) {
-					row.append(Component.literal(SPRITE_SPACER).withStyle(HEART_STYLE));
-				}
 			}
 
 			rows.add(row);

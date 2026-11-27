@@ -91,7 +91,6 @@ You can also configure the mod via client-side chat commands (aliases: `/cmhi`, 
 | `/mobhealth position <above\|below>` | Set position above or below mob nameplate |
 | `/mobhealth texture <vanilla\|hardcore\|unicode>` | Set heart texture style |
 | `/mobhealth distance <8-64>` | Set maximum render distance in blocks |
-| `/mobhealth maxrows <1-5>` | Set maximum stacked heart rows (1 to 5) |
 | `/mobhealth absorption [on\|off]` | Toggle golden apple / effect absorption hearts |
 | `/mobhealth hostile [on\|off]` | Toggle monster / hostile mobs visibility |
 | `/mobhealth passive [on\|off]` | Toggle animal / passive mobs visibility |

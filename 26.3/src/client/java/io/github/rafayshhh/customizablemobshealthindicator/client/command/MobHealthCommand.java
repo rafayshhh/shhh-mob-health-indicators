@@ -250,23 +250,6 @@ public class MobHealthCommand {
 								})
 						)
 				)
-				.then(
-					ClientCommands.literal("maxrows")
-						.then(
-							ClientCommands.argument("rows", IntegerArgumentType.integer(1, 5))
-								.executes(context -> {
-									int rows = IntegerArgumentType.getInteger(context, "rows");
-									CustomizableHealthConfig config = CustomizableHealthConfig.get();
-									config.maxHeartRows = rows;
-									CustomizableHealthConfig.save();
-									context.getSource().sendFeedback(
-										Component.translatable("customizable-mobs-health-indicator.command.max_rows_changed", rows)
-											.withStyle(ChatFormatting.GREEN)
-									);
-									return 1;
-								})
-						)
-				)
 				.then(createToggleSubcommand("absorption", "customizable-mobs-health-indicator.command.absorption_status",
 					config -> config.showAbsorption = !config.showAbsorption,
 					(config, val) -> config.showAbsorption = val,
@@ -322,7 +305,6 @@ public class MobHealthCommand {
 							config.hideFullHealth = false;
 							config.hideInvisible = true;
 							config.maxDistance = 32.0f;
-							config.maxHeartRows = 3;
 							config.colorGrading = true;
 							CustomizableHealthConfig.save();
 
@@ -351,7 +333,6 @@ public class MobHealthCommand {
 		source.sendFeedback(Component.literal(" - Position: ").withStyle(ChatFormatting.GRAY).append(config.position.getDisplayName().copy().withStyle(ChatFormatting.YELLOW)));
 		source.sendFeedback(Component.literal(" - Texture: ").withStyle(ChatFormatting.GRAY).append(config.heartTexture.getDisplayName().copy().withStyle(ChatFormatting.YELLOW)));
 		source.sendFeedback(Component.literal(" - Distance: ").withStyle(ChatFormatting.GRAY).append(Component.literal(Math.round(config.maxDistance) + "m").withStyle(ChatFormatting.YELLOW)));
-		source.sendFeedback(Component.literal(" - Max Heart Rows: ").withStyle(ChatFormatting.GRAY).append(Component.literal(String.valueOf(config.maxHeartRows)).withStyle(ChatFormatting.YELLOW)));
 		source.sendFeedback(Component.literal(" - Absorption: ").withStyle(ChatFormatting.GRAY).append(formatStatus(config.showAbsorption)));
 		source.sendFeedback(Component.literal(" - Hostile Mobs: ").withStyle(ChatFormatting.GRAY).append(formatStatus(config.showHostile)));
 		source.sendFeedback(Component.literal(" - Passive Mobs: ").withStyle(ChatFormatting.GRAY).append(formatStatus(config.showPassive)));
@@ -372,7 +353,6 @@ public class MobHealthCommand {
 		addHelpLine(source, "/" + commandName + " position <above|below>", "Set position above or below nametag");
 		addHelpLine(source, "/" + commandName + " texture <vanilla|hardcore|unicode>", "Set heart texture style");
 		addHelpLine(source, "/" + commandName + " distance <8-64>", "Set max render distance in blocks");
-		addHelpLine(source, "/" + commandName + " maxrows <1-5>", "Set max stacked heart rows (1-5)");
 		addHelpLine(source, "/" + commandName + " absorption [on|off]", "Toggle golden apple absorption");
 		addHelpLine(source, "/" + commandName + " hostile [on|off]", "Toggle hostile mobs visibility");
 		addHelpLine(source, "/" + commandName + " passive [on|off]", "Toggle passive mobs visibility");

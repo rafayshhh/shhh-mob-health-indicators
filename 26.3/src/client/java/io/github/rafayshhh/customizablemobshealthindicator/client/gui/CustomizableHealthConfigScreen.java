@@ -114,22 +114,7 @@ public class CustomizableHealthConfigScreen extends Screen {
 		.build();
 		leftCol.addChild(absorptionButton);
 
-		// 6. Max Heart Rows
-		Button maxRowsButton = Button.builder(
-			getMaxRowsMessage(),
-			button -> {
-				CustomizableHealthConfig config = CustomizableHealthConfig.get();
-				config.maxHeartRows = config.maxHeartRows >= 5 ? 1 : config.maxHeartRows + 1;
-				CustomizableHealthConfig.save();
-				button.setMessage(getMaxRowsMessage());
-			}
-		)
-		.tooltip(Tooltip.create(Component.translatable("customizable-mobs-health-indicator.tooltip.max_rows")))
-		.width(BUTTON_WIDTH)
-		.build();
-		leftCol.addChild(maxRowsButton);
-
-		// 7. Hide Invisible
+		// 6. Hide Invisible
 		Button hideInvisibleButton = Button.builder(
 			getHideInvisibleMessage(),
 			button -> {
@@ -314,13 +299,6 @@ public class CustomizableHealthConfigScreen extends Screen {
 		return CommonComponents.optionStatus(
 			Component.translatable("customizable-mobs-health-indicator.config.show_absorption"),
 			CustomizableHealthConfig.get().showAbsorption
-		);
-	}
-
-	private Component getMaxRowsMessage() {
-		return Component.translatable(
-			"customizable-mobs-health-indicator.config.max_rows",
-			CustomizableHealthConfig.get().maxHeartRows
 		);
 	}
 
