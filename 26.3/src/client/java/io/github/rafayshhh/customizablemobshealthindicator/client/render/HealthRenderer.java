@@ -12,6 +12,8 @@ import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.List;
+
 /**
  * Renders the mob health indicator in 3D world space using native billboarded submitNameTag.
  */
@@ -36,20 +38,23 @@ public class HealthRenderer {
 			return;
 		}
 
-		// Retrieve pre-built health component
+		// Retrieve extracted health
 		if (!(state instanceof HealthRenderStateAccessor accessor)) {
 			return;
 		}
-		Component healthText = accessor.cmhi$getHealthComponent();
-		if (healthText == null || healthText.getString().isEmpty()) {
+		HealthInfo info = accessor.cmhi$getHealthInfo();
+		if (info == null) {
+			return;
+		}
+
+		List<Component> rows = HealthComponentBuilder.buildRows(info, config.preset, config);
+		if (rows.isEmpty()) {
 			return;
 		}
 
 		Vec3 attachment = state.nameTagAttachment != null 
 			? state.nameTagAttachment 
 			: new Vec3(0.0, state.boundingBoxHeight + 0.5, 0.0);
-
-		poseStack.pushPose();
 
 		// Calculate vertical offset relative to name tag if present
 		float extraY = 0.0f;
@@ -61,20 +66,30 @@ public class HealthRenderer {
 			}
 		}
 
-		if (extraY != 0.0f) {
-			poseStack.translate(0.0f, extraY, 0.0f);
+		for (int i = 0; i < rows.size(); i++) {
+			Component rowText = rows.get(i);
+			if (rowText.getString().isEmpty()) {
+				continue;
+			}
+
+			poseStack.pushPose();
+
+			float rowY = extraY + (config.position == IndicatorPosition.ABOVE_NAME ? i : -i) * LINE_HEIGHT_OFFSET;
+			if (rowY != 0.0f) {
+				poseStack.translate(0.0f, rowY, 0.0f);
+			}
+
+			submitNodeCollector.submitNameTag(
+				poseStack,
+				attachment,
+				0, // yOffset
+				rowText,
+				!state.isDiscrete,
+				state.lightCoords,
+				cameraRenderState
+			);
+
+			poseStack.popPose();
 		}
-
-		submitNodeCollector.submitNameTag(
-			poseStack,
-			attachment,
-			0, // yOffset
-			healthText,
-			!state.isDiscrete,
-			state.lightCoords,
-			cameraRenderState
-		);
-
-		poseStack.popPose();
 	}
 }

@@ -80,15 +80,29 @@ Keybindings can be rebound in **Options → Controls → Key Binds → Customiza
 > Keybindings include built-in screen guards (`client.gui.screen() == null`), so pressing `0` while typing in chat, search bars, creative inventory, signs, or containers will never accidentally open the settings screen.
 
 ### Client Commands
-You can also configure the mod via client-side chat commands (aliases: `/cmhi`, `/custommobhealth`):
+You can also configure the mod via client-side chat commands (aliases: `/cmhi`, `/custommobhealth`, `/mobhealthindicators`):
 
 | Command | Description |
 | :--- | :--- |
-| `/mobhealth` | Opens the configuration menu |
-| `/mobhealth toggle` | Toggles mob health indicators ON or OFF |
+| `/mobhealth` or `/mobhealth gui` | Opens the configuration menu |
+| `/mobhealth toggle` | Quick toggle mob health indicators ON or OFF |
+| `/mobhealth enable` / `disable` | Explicitly turn mob indicators ON or OFF |
 | `/mobhealth preset <hearts\|compact\|bar\|numeric\|lifesteal>` | Quickly switches the active visual preset |
+| `/mobhealth position <above\|below>` | Set position above or below mob nameplate |
+| `/mobhealth texture <vanilla\|hardcore\|unicode>` | Set heart texture style |
+| `/mobhealth distance <8-64>` | Set maximum render distance in blocks |
+| `/mobhealth maxrows <1-5>` | Set maximum stacked heart rows (1 to 5) |
+| `/mobhealth absorption [on\|off]` | Toggle golden apple / effect absorption hearts |
+| `/mobhealth hostile [on\|off]` | Toggle monster / hostile mobs visibility |
+| `/mobhealth passive [on\|off]` | Toggle animal / passive mobs visibility |
+| `/mobhealth bosses [on\|off]` | Toggle boss mobs visibility |
+| `/mobhealth namedonly [on\|off]` | Toggle named mobs only |
+| `/mobhealth hidefullhealth [on\|off]` | Toggle hide at 100% health |
+| `/mobhealth invisible [on\|off]` | Toggle hide invisible mobs |
+| `/mobhealth colorgrading [on\|off]` | Toggle health color grading |
 | `/mobhealth status` | Displays active settings and filters in chat |
-| `/mobhealth help` | Shows available command arguments |
+| `/mobhealth reset` | Resets all settings to factory defaults |
+| `/mobhealth help` | Shows complete command reference |
 
 ---
 

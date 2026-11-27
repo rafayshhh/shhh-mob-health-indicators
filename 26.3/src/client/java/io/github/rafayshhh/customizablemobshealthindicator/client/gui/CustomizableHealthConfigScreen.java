@@ -1,6 +1,8 @@
 package io.github.rafayshhh.customizablemobshealthindicator.client.gui;
 
 import io.github.rafayshhh.customizablemobshealthindicator.client.config.CustomizableHealthConfig;
+import io.github.rafayshhh.customizablemobshealthindicator.client.config.HealthPreset;
+import io.github.rafayshhh.customizablemobshealthindicator.client.config.HeartTextureStyle;
 import io.github.rafayshhh.customizablemobshealthindicator.client.config.IndicatorPosition;
 import net.minecraft.client.gui.components.AbstractSliderButton;
 import net.minecraft.client.gui.components.Button;
@@ -13,9 +15,12 @@ import net.minecraft.network.chat.Component;
 
 /**
  * In-game configuration screen for Customizable Mobs Health Indicator.
- * Accessible via Mod Menu, custom keybinds, or /mobhealth commands.
+ * Balanced 2-column responsive layout preventing screen overflow on all GUI scales.
  */
 public class CustomizableHealthConfigScreen extends Screen {
+	private static final int BUTTON_WIDTH = 150;
+	private static final int BUTTON_HEIGHT = 20;
+
 	private final Screen parent;
 	private final HeaderAndFooterLayout layout = new HeaderAndFooterLayout(this);
 
@@ -28,170 +33,122 @@ public class CustomizableHealthConfigScreen extends Screen {
 	protected void init() {
 		this.layout.addTitleHeader(this.title, this.font);
 
-		LinearLayout content = LinearLayout.vertical().spacing(4);
+		LinearLayout content = LinearLayout.horizontal().spacing(8);
+		LinearLayout leftCol = LinearLayout.vertical().spacing(4);
+		LinearLayout rightCol = LinearLayout.vertical().spacing(4);
 
-		// 1. Master Enable Toggle (Full Width)
+		// --- Left Column (7 Options) ---
+
+		// 1. Master Enable Toggle
 		Button enableButton = Button.builder(
 			getEnableMessage(),
 			button -> {
 				CustomizableHealthConfig config = CustomizableHealthConfig.get();
 				config.enabled = !config.enabled;
+				CustomizableHealthConfig.save();
 				button.setMessage(getEnableMessage());
 			}
 		)
 		.tooltip(Tooltip.create(Component.translatable("customizable-mobs-health-indicator.tooltip.enabled")))
-		.width(310)
+		.width(BUTTON_WIDTH)
 		.build();
-		content.addChild(enableButton);
+		leftCol.addChild(enableButton);
 
-		// Row 2: Preset Selector | Position Selector
-		LinearLayout row2 = LinearLayout.horizontal().spacing(8);
+		// 2. Preset Selector
 		Button presetButton = Button.builder(
 			getPresetMessage(),
 			button -> {
 				CustomizableHealthConfig config = CustomizableHealthConfig.get();
 				config.preset = config.preset.next();
+				CustomizableHealthConfig.save();
 				button.setMessage(getPresetMessage());
 			}
 		)
 		.tooltip(Tooltip.create(Component.translatable("customizable-mobs-health-indicator.tooltip.preset")))
-		.width(151)
+		.width(BUTTON_WIDTH)
 		.build();
-		row2.addChild(presetButton);
+		leftCol.addChild(presetButton);
 
+		// 3. Position Selector
 		Button positionButton = Button.builder(
 			getPositionMessage(),
 			button -> {
 				CustomizableHealthConfig config = CustomizableHealthConfig.get();
 				config.position = config.position.next();
+				CustomizableHealthConfig.save();
 				button.setMessage(getPositionMessage());
 			}
 		)
 		.tooltip(Tooltip.create(Component.translatable("customizable-mobs-health-indicator.tooltip.position")))
-		.width(151)
+		.width(BUTTON_WIDTH)
 		.build();
-		row2.addChild(positionButton);
-		content.addChild(row2);
+		leftCol.addChild(positionButton);
 
-		// Row 3: Heart Texture Style | Absorption Hearts
-		LinearLayout row3 = LinearLayout.horizontal().spacing(8);
+		// 4. Heart Texture Style
 		Button textureButton = Button.builder(
 			getTextureMessage(),
 			button -> {
 				CustomizableHealthConfig config = CustomizableHealthConfig.get();
 				config.heartTexture = config.heartTexture.next();
+				CustomizableHealthConfig.save();
 				button.setMessage(getTextureMessage());
 			}
 		)
 		.tooltip(Tooltip.create(Component.translatable("customizable-mobs-health-indicator.tooltip.heart_texture")))
-		.width(151)
+		.width(BUTTON_WIDTH)
 		.build();
-		row3.addChild(textureButton);
+		leftCol.addChild(textureButton);
 
+		// 5. Show Absorption
 		Button absorptionButton = Button.builder(
 			getAbsorptionMessage(),
 			button -> {
 				CustomizableHealthConfig config = CustomizableHealthConfig.get();
 				config.showAbsorption = !config.showAbsorption;
+				CustomizableHealthConfig.save();
 				button.setMessage(getAbsorptionMessage());
 			}
 		)
 		.tooltip(Tooltip.create(Component.translatable("customizable-mobs-health-indicator.tooltip.show_absorption")))
-		.width(151)
+		.width(BUTTON_WIDTH)
 		.build();
-		row3.addChild(absorptionButton);
-		content.addChild(row3);
+		leftCol.addChild(absorptionButton);
 
-		// Row 4: Hostile Mobs | Passive Mobs
-		LinearLayout row4 = LinearLayout.horizontal().spacing(8);
-		Button hostileButton = Button.builder(
-			getHostileMessage(),
+		// 6. Max Heart Rows
+		Button maxRowsButton = Button.builder(
+			getMaxRowsMessage(),
 			button -> {
 				CustomizableHealthConfig config = CustomizableHealthConfig.get();
-				config.showHostile = !config.showHostile;
-				button.setMessage(getHostileMessage());
+				config.maxHeartRows = config.maxHeartRows >= 5 ? 1 : config.maxHeartRows + 1;
+				CustomizableHealthConfig.save();
+				button.setMessage(getMaxRowsMessage());
 			}
 		)
-		.tooltip(Tooltip.create(Component.translatable("customizable-mobs-health-indicator.tooltip.show_hostile")))
-		.width(151)
+		.tooltip(Tooltip.create(Component.translatable("customizable-mobs-health-indicator.tooltip.max_rows")))
+		.width(BUTTON_WIDTH)
 		.build();
-		row4.addChild(hostileButton);
+		leftCol.addChild(maxRowsButton);
 
-		Button passiveButton = Button.builder(
-			getPassiveMessage(),
-			button -> {
-				CustomizableHealthConfig config = CustomizableHealthConfig.get();
-				config.showPassive = !config.showPassive;
-				button.setMessage(getPassiveMessage());
-			}
-		)
-		.tooltip(Tooltip.create(Component.translatable("customizable-mobs-health-indicator.tooltip.show_passive")))
-		.width(151)
-		.build();
-		row4.addChild(passiveButton);
-		content.addChild(row4);
-
-		// Row 5: Boss Mobs | Named Mobs Only
-		LinearLayout row5 = LinearLayout.horizontal().spacing(8);
-		Button bossButton = Button.builder(
-			getBossMessage(),
-			button -> {
-				CustomizableHealthConfig config = CustomizableHealthConfig.get();
-				config.showBosses = !config.showBosses;
-				button.setMessage(getBossMessage());
-			}
-		)
-		.tooltip(Tooltip.create(Component.translatable("customizable-mobs-health-indicator.tooltip.show_bosses")))
-		.width(151)
-		.build();
-		row5.addChild(bossButton);
-
-		Button namedOnlyButton = Button.builder(
-			getNamedOnlyMessage(),
-			button -> {
-				CustomizableHealthConfig config = CustomizableHealthConfig.get();
-				config.showNamedOnly = !config.showNamedOnly;
-				button.setMessage(getNamedOnlyMessage());
-			}
-		)
-		.tooltip(Tooltip.create(Component.translatable("customizable-mobs-health-indicator.tooltip.show_named_only")))
-		.width(151)
-		.build();
-		row5.addChild(namedOnlyButton);
-		content.addChild(row5);
-
-		// Row 6: Hide Full Health | Hide Invisible
-		LinearLayout row6 = LinearLayout.horizontal().spacing(8);
-		Button hideFullHealthButton = Button.builder(
-			getHideFullHealthMessage(),
-			button -> {
-				CustomizableHealthConfig config = CustomizableHealthConfig.get();
-				config.hideFullHealth = !config.hideFullHealth;
-				button.setMessage(getHideFullHealthMessage());
-			}
-		)
-		.tooltip(Tooltip.create(Component.translatable("customizable-mobs-health-indicator.tooltip.hide_full_health")))
-		.width(151)
-		.build();
-		row6.addChild(hideFullHealthButton);
-
+		// 7. Hide Invisible
 		Button hideInvisibleButton = Button.builder(
 			getHideInvisibleMessage(),
 			button -> {
 				CustomizableHealthConfig config = CustomizableHealthConfig.get();
 				config.hideInvisible = !config.hideInvisible;
+				CustomizableHealthConfig.save();
 				button.setMessage(getHideInvisibleMessage());
 			}
 		)
 		.tooltip(Tooltip.create(Component.translatable("customizable-mobs-health-indicator.tooltip.hide_invisible")))
-		.width(151)
+		.width(BUTTON_WIDTH)
 		.build();
-		row6.addChild(hideInvisibleButton);
-		content.addChild(row6);
+		leftCol.addChild(hideInvisibleButton);
 
-		// Row 7: Max Distance Slider (Full Width)
+		// --- Right Column (7 Options) ---
+
+		// 1. Max Distance Slider (8 to 64 blocks)
 		double initialDist = (CustomizableHealthConfig.get().maxDistance - 8.0) / (64.0 - 8.0);
-		AbstractSliderButton distanceSlider = new AbstractSliderButton(0, 0, 310, 20, CommonComponents.EMPTY, initialDist) {
+		AbstractSliderButton distanceSlider = new AbstractSliderButton(0, 0, BUTTON_WIDTH, BUTTON_HEIGHT, CommonComponents.EMPTY, initialDist) {
 			@Override
 			protected void updateMessage() {
 				int dist = Math.round(CustomizableHealthConfig.get().maxDistance);
@@ -202,31 +159,111 @@ public class CustomizableHealthConfigScreen extends Screen {
 			protected void applyValue() {
 				float dist = 8.0f + (float) this.value * (64.0f - 8.0f);
 				CustomizableHealthConfig.get().maxDistance = Math.round(dist);
+				CustomizableHealthConfig.save();
 				updateMessage();
 			}
 		};
 		distanceSlider.setMessage(Component.translatable("customizable-mobs-health-indicator.config.distance", Math.round(CustomizableHealthConfig.get().maxDistance)));
 		distanceSlider.setTooltip(Tooltip.create(Component.translatable("customizable-mobs-health-indicator.tooltip.distance")));
-		content.addChild(distanceSlider);
+		rightCol.addChild(distanceSlider);
 
-		// Row 8: Dynamic Color Grading (Full Width)
+		// 2. Dynamic Color Grading
 		Button colorGradingButton = Button.builder(
 			getColorGradingMessage(),
 			button -> {
 				CustomizableHealthConfig config = CustomizableHealthConfig.get();
 				config.colorGrading = !config.colorGrading;
+				CustomizableHealthConfig.save();
 				button.setMessage(getColorGradingMessage());
 			}
 		)
 		.tooltip(Tooltip.create(Component.translatable("customizable-mobs-health-indicator.tooltip.color_grading")))
-		.width(310)
+		.width(BUTTON_WIDTH)
 		.build();
-		content.addChild(colorGradingButton);
+		rightCol.addChild(colorGradingButton);
 
+		// 3. Hostile Mobs
+		Button hostileButton = Button.builder(
+			getHostileMessage(),
+			button -> {
+				CustomizableHealthConfig config = CustomizableHealthConfig.get();
+				config.showHostile = !config.showHostile;
+				CustomizableHealthConfig.save();
+				button.setMessage(getHostileMessage());
+			}
+		)
+		.tooltip(Tooltip.create(Component.translatable("customizable-mobs-health-indicator.tooltip.show_hostile")))
+		.width(BUTTON_WIDTH)
+		.build();
+		rightCol.addChild(hostileButton);
+
+		// 4. Passive Mobs
+		Button passiveButton = Button.builder(
+			getPassiveMessage(),
+			button -> {
+				CustomizableHealthConfig config = CustomizableHealthConfig.get();
+				config.showPassive = !config.showPassive;
+				CustomizableHealthConfig.save();
+				button.setMessage(getPassiveMessage());
+			}
+		)
+		.tooltip(Tooltip.create(Component.translatable("customizable-mobs-health-indicator.tooltip.show_passive")))
+		.width(BUTTON_WIDTH)
+		.build();
+		rightCol.addChild(passiveButton);
+
+		// 5. Boss Mobs
+		Button bossButton = Button.builder(
+			getBossMessage(),
+			button -> {
+				CustomizableHealthConfig config = CustomizableHealthConfig.get();
+				config.showBosses = !config.showBosses;
+				CustomizableHealthConfig.save();
+				button.setMessage(getBossMessage());
+			}
+		)
+		.tooltip(Tooltip.create(Component.translatable("customizable-mobs-health-indicator.tooltip.show_bosses")))
+		.width(BUTTON_WIDTH)
+		.build();
+		rightCol.addChild(bossButton);
+
+		// 6. Named Mobs Only
+		Button namedOnlyButton = Button.builder(
+			getNamedOnlyMessage(),
+			button -> {
+				CustomizableHealthConfig config = CustomizableHealthConfig.get();
+				config.showNamedOnly = !config.showNamedOnly;
+				CustomizableHealthConfig.save();
+				button.setMessage(getNamedOnlyMessage());
+			}
+		)
+		.tooltip(Tooltip.create(Component.translatable("customizable-mobs-health-indicator.tooltip.show_named_only")))
+		.width(BUTTON_WIDTH)
+		.build();
+		rightCol.addChild(namedOnlyButton);
+
+		// 7. Hide Full Health
+		Button hideFullHealthButton = Button.builder(
+			getHideFullHealthMessage(),
+			button -> {
+				CustomizableHealthConfig config = CustomizableHealthConfig.get();
+				config.hideFullHealth = !config.hideFullHealth;
+				CustomizableHealthConfig.save();
+				button.setMessage(getHideFullHealthMessage());
+			}
+		)
+		.tooltip(Tooltip.create(Component.translatable("customizable-mobs-health-indicator.tooltip.hide_full_health")))
+		.width(BUTTON_WIDTH)
+		.build();
+		rightCol.addChild(hideFullHealthButton);
+
+		// Assemble columns into horizontal content
+		content.addChild(leftCol);
+		content.addChild(rightCol);
 		this.layout.addToContents(content);
 
-		// Done Button in Footer
-		Button doneButton = Button.builder(CommonComponents.GUI_DONE, button -> onClose()).width(210).build();
+		// Footer: Standard 200px Done Button
+		Button doneButton = Button.builder(CommonComponents.GUI_DONE, button -> onClose()).width(200).build();
 		this.layout.addToFooter(doneButton);
 
 		// Register all widgets recursively into screen
@@ -277,6 +314,13 @@ public class CustomizableHealthConfigScreen extends Screen {
 		return CommonComponents.optionStatus(
 			Component.translatable("customizable-mobs-health-indicator.config.show_absorption"),
 			CustomizableHealthConfig.get().showAbsorption
+		);
+	}
+
+	private Component getMaxRowsMessage() {
+		return Component.translatable(
+			"customizable-mobs-health-indicator.config.max_rows",
+			CustomizableHealthConfig.get().maxHeartRows
 		);
 	}
 

@@ -10,6 +10,8 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.Identifier;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -36,6 +38,7 @@ public class HealthComponentBuilder {
 	public static final String SPRITE_HC_FULL = "\uE009";      // Hardcore Full Heart
 	public static final String SPRITE_HC_HALF = "\uE00A";      // Hardcore Half Heart
 	public static final String SPRITE_HC_CONTAINER = "\uE00B"; // Hardcore Empty Container
+	public static final String SPRITE_SPACER = "\uE00F";       // 9px Invisible Spacer for Left-Aligned Grid Rows
 
 	// Status & Health Colors
 	public static final TextColor COLOR_HIGH = TextColor.fromRgb(0x44FF66);        // Vibrant Emerald Green
@@ -74,18 +77,63 @@ public class HealthComponentBuilder {
 	}
 
 	/**
-	 * Preset 1: Classic Hearts
-	 * Standard health (<= 12 hearts): Displays authentic 9x9 pixel-art textured hearts.
-	 * High health (> 12 hearts): Displays RPG Tiered Hearts with tier textures.
+	 * Formats HealthInfo into a vertical stack of rows for 3D nametag rendering.
+	 * For HEARTS preset, returns 10-heart rows stacked vertically.
+	 * For other presets, returns a single-element list.
+	 */
+	public static List<Component> buildRows(HealthInfo info, HealthPreset preset, CustomizableHealthConfig config) {
+		if (info == null) {
+			return List.of();
+		}
+		if (preset == HealthPreset.HEARTS) {
+			return buildHeartRows(info, config);
+		} else {
+			Component single = build(info, preset, config);
+			return single.getString().isEmpty() ? List.of() : List.of(single);
+		}
+	}
+
+	/**
+	 * Preset 1: Classic Hearts (Single-component fallback)
 	 */
 	private static Component buildHearts(HealthInfo info, CustomizableHealthConfig config) {
-		MutableComponent root = Component.empty();
+		List<Component> rows = buildHeartRows(info, config);
+		if (rows.isEmpty()) {
+			return Component.empty();
+		}
+		MutableComponent joined = Component.empty();
+		for (int i = 0; i < rows.size(); i++) {
+			if (i > 0) {
+				joined.append(Component.literal(" "));
+			}
+			joined.append(rows.get(i));
+		}
+		return joined;
+	}
 
-		float health = info.health();
-		float maxHealth = info.maxHealth();
+	/**
+	 * Preset 1: Classic Hearts - Multi-Row Grid Builder (10 Hearts Per Row).
+	 * Formats hearts into rows of up to 10 hearts.
+	 * When entity has > 10 hearts (high health or absorption), extra hearts
+	 * stack into row 2, row 3, etc.
+	 * In a multi-row display, partial rows are padded on the right with SPRITE_SPACER (\uE00F)
+	 * so every row has an identical width and aligns perfectly on the left.
+	 */
+	public static List<Component> buildHeartRows(HealthInfo info, CustomizableHealthConfig config) {
+		if (info == null) {
+			return List.of();
+		}
+
+		float health = Math.max(0.0f, info.health());
+		float maxHealth = Math.max(1.0f, info.maxHealth());
+		float absorption = (config.showAbsorption && info.hasAbsorption()) ? info.absorption() : 0.0f;
+
 		int fullHearts = (int) (health / 2.0f);
 		boolean halfHeart = (health % 2.0f) >= 0.5f;
 		int totalContainers = Math.max(10, (int) Math.ceil(maxHealth / 2.0f));
+
+		int goldFullHearts = (int) (absorption / 2.0f);
+		boolean goldHalfHeart = (absorption % 2.0f) >= 0.5f;
 
 		boolean useTextured = config.heartTexture != HeartTextureStyle.UNICODE;
 		boolean isHardcore = config.heartTexture == HeartTextureStyle.HARDCORE;
@@ -94,99 +142,87 @@ public class HealthComponentBuilder {
 		String halfGlyph = isHardcore ? SPRITE_HC_HALF : SPRITE_HALF;
 		String containerGlyph = isHardcore ? SPRITE_HC_CONTAINER : SPRITE_CONTAINER;
 
-		// Standard range: <= 12 containers (<= 24 HP)
-		if (totalContainers <= 12) {
-			for (int i = 0; i < fullHearts && i < totalContainers; i++) {
-				if (useTextured) {
-					root.append(Component.literal(fullGlyph).withStyle(HEART_STYLE));
-				} else {
-					root.append(Component.literal("❤").withStyle(Style.EMPTY.withColor(COLOR_HEART_FULL)));
-				}
-			}
-			int rendered = fullHearts;
-			if (halfHeart && rendered < totalContainers) {
-				if (useTextured) {
-					root.append(Component.literal(halfGlyph).withStyle(HEART_STYLE));
-				} else {
-					root.append(Component.literal("❤").withStyle(Style.EMPTY.withColor(COLOR_HEART_HALF)));
-				}
-				rendered++;
-			}
-			for (int i = rendered; i < totalContainers; i++) {
-				if (useTextured) {
-					root.append(Component.literal(containerGlyph).withStyle(HEART_STYLE));
-				} else {
-					root.append(Component.literal("❤").withStyle(Style.EMPTY.withColor(COLOR_EMPTY)));
-				}
-			}
-			if (config.showAbsorption && info.hasAbsorption()) {
-				int goldHearts = (int) Math.ceil(info.absorption() / 2.0f);
-				root.append(Component.literal(" "));
-				for (int i = 0; i < goldHearts; i++) {
-					if (useTextured) {
-						root.append(Component.literal(SPRITE_ABS_FULL).withStyle(HEART_STYLE));
-					} else {
-						root.append(Component.literal("❤").withStyle(Style.EMPTY.withColor(COLOR_ABSORPTION)));
-					}
-				}
-			}
-			return root;
-		}
+		// 1. Collect all heart tokens in order: Red Hearts -> Absorption Hearts -> Empty Containers
+		List<Component> slotComponents = new ArrayList<>();
 
-		// High Health (> 12 containers / > 24 HP, e.g. Iron Golems, Withers, Wardens): RPG Tiered Hearts
-		int currentTier = Math.max(1, (int) Math.ceil(health / 20.0f));
-		TextColor currentTierColor = getTierColor(currentTier);
-		TextColor prevTierColor = currentTier > 1 ? getTierColor(currentTier - 1) : COLOR_EMPTY;
-
-		// Tier multiplier prefix: e.g. "x2 "
-		root.append(Component.literal("x" + currentTier + " ")
-			.withStyle(Style.EMPTY.withColor(currentTierColor).withBold(true)));
-
-		// Active tier health extraction
-		float healthInTier = health - ((currentTier - 1) * 20.0f);
-		int fullHeartsInTier = (int) (healthInTier / 2.0f);
-		boolean halfHeartInTier = (healthInTier % 2.0f) >= 0.5f;
-
-		String tierGlyph = getTierSprite(currentTier, isHardcore);
-		String prevTierGlyph = currentTier > 1 ? getTierSprite(currentTier - 1, isHardcore) : containerGlyph;
-
-		int renderedInTier = 0;
-		for (int i = 0; i < fullHeartsInTier && renderedInTier < 10; i++) {
+		// 1a. Full and half red hearts
+		for (int i = 0; i < fullHearts; i++) {
 			if (useTextured) {
-				root.append(Component.literal(tierGlyph).withStyle(HEART_STYLE));
+				slotComponents.add(Component.literal(fullGlyph).withStyle(HEART_STYLE));
 			} else {
-				root.append(Component.literal("❤").withStyle(Style.EMPTY.withColor(currentTierColor)));
+				slotComponents.add(Component.literal("❤").withStyle(Style.EMPTY.withColor(COLOR_HEART_FULL)));
 			}
-			renderedInTier++;
 		}
-		if (halfHeartInTier && renderedInTier < 10) {
+		if (halfHeart) {
 			if (useTextured) {
-				root.append(Component.literal(halfGlyph).withStyle(HEART_STYLE));
+				slotComponents.add(Component.literal(halfGlyph).withStyle(HEART_STYLE));
 			} else {
-				root.append(Component.literal("❤").withStyle(Style.EMPTY.withColor(COLOR_HEART_HALF)));
+				slotComponents.add(Component.literal("❤").withStyle(Style.EMPTY.withColor(COLOR_HEART_HALF)));
 			}
-			renderedInTier++;
 		}
-		for (int i = renderedInTier; i < 10; i++) {
+
+		// 1b. Absorption hearts
+		for (int i = 0; i < goldFullHearts; i++) {
 			if (useTextured) {
-				root.append(Component.literal(prevTierGlyph).withStyle(HEART_STYLE));
+				slotComponents.add(Component.literal(SPRITE_ABS_FULL).withStyle(HEART_STYLE));
 			} else {
-				root.append(Component.literal("❤").withStyle(Style.EMPTY.withColor(prevTierColor)));
+				slotComponents.add(Component.literal("❤").withStyle(Style.EMPTY.withColor(COLOR_ABSORPTION)));
+			}
+		}
+		if (goldHalfHeart) {
+			if (useTextured) {
+				slotComponents.add(Component.literal(SPRITE_ABS_HALF).withStyle(HEART_STYLE));
+			} else {
+				slotComponents.add(Component.literal("❤").withStyle(Style.EMPTY.withColor(COLOR_ABSORPTION)));
 			}
 		}
 
-		// Compact numeric counter: " 34/40"
-		root.append(Component.literal(" " + formatNumber(health)).withStyle(Style.EMPTY.withColor(currentTierColor)));
-		root.append(Component.literal("/").withStyle(Style.EMPTY.withColor(COLOR_DIVIDER)));
-		root.append(Component.literal(formatNumber(maxHealth)).withStyle(Style.EMPTY.withColor(COLOR_MAX_HP)));
-
-		// Absorption Tag
-		if (config.showAbsorption && info.hasAbsorption()) {
-			root.append(Component.literal(" +" + formatNumber(info.absorption()) + " "));
-			root.append(getAbsorptionIcon(config));
+		// 1c. Empty containers (fill remaining capacity up to totalContainers)
+		int filled = slotComponents.size();
+		if (filled < totalContainers) {
+			int emptyCount = totalContainers - filled;
+			for (int i = 0; i < emptyCount; i++) {
+				if (useTextured) {
+					slotComponents.add(Component.literal(containerGlyph).withStyle(HEART_STYLE));
+				} else {
+					slotComponents.add(Component.literal("❤").withStyle(Style.EMPTY.withColor(COLOR_EMPTY)));
+				}
+			}
 		}
 
-		return root;
+		if (slotComponents.isEmpty()) {
+			return List.of();
+		}
+
+		int maxRows = Math.clamp(config.maxHeartRows, 1, 5);
+		int totalSlots = slotComponents.size();
+		int rowCount = Math.min(maxRows, (int) Math.ceil(totalSlots / 10.0));
+
+		List<Component> rows = new ArrayList<>(rowCount);
+		for (int r = 0; r < rowCount; r++) {
+			MutableComponent row = Component.empty();
+			int startIdx = r * 10;
+			int endIdx = Math.min(startIdx + 10, totalSlots);
+			int inThisRow = 0;
+
+			for (int i = startIdx; i < endIdx; i++) {
+				row.append(slotComponents.get(i));
+				inThisRow++;
+			}
+
+			// In a multi-row display, pad partial rows on the right to 10 slots with SPRITE_SPACER
+			// so that each row is 10 slots wide and aligns perfectly on the left.
+			if (rowCount > 1 && inThisRow < 10) {
+				int spacersNeeded = 10 - inThisRow;
+				for (int s = 0; s < spacersNeeded; s++) {
+					row.append(Component.literal(SPRITE_SPACER).withStyle(HEART_STYLE));
+				}
+			}
+
+			rows.add(row);
+		}
+
+		return rows;
 	}
 
 	/**

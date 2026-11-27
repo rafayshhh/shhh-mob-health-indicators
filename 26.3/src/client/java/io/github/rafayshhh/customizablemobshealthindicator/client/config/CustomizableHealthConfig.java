@@ -18,7 +18,22 @@ import java.nio.file.Path;
  */
 public class CustomizableHealthConfig {
 	private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-	private static final Path CONFIG_PATH = FabricLoader.getInstance().getConfigDir().resolve("customizable-mobs-health-indicator.json");
+
+	private static Path resolveConfigDir() {
+		try {
+			if (FabricLoader.getInstance() != null) {
+				Path dir = FabricLoader.getInstance().getConfigDir();
+				if (dir != null) {
+					return dir;
+				}
+			}
+		} catch (Throwable ignored) {
+		}
+		return Path.of("config");
+	}
+
+	private static final Path CONFIG_PATH = resolveConfigDir().resolve("customizable-mobs-health-indicator.json");
+	private static final Path LEGACY_CONFIG_PATH = resolveConfigDir().resolve("shhh-mob-health-indicators.json");
 
 	private static CustomizableHealthConfig instance;
 
@@ -35,6 +50,7 @@ public class CustomizableHealthConfig {
 	public boolean hideFullHealth = false;
 	public boolean hideInvisible = true;
 	public float maxDistance = 32.0f;
+	public int maxHeartRows = 3;
 	public boolean colorGrading = true;
 
 	// State tracking for dirty-check saving
@@ -50,6 +66,7 @@ public class CustomizableHealthConfig {
 	private transient boolean lastSavedHideFullHealth = false;
 	private transient boolean lastSavedHideInvisible = true;
 	private transient float lastSavedMaxDistance = 32.0f;
+	private transient int lastSavedMaxHeartRows = 3;
 	private transient boolean lastSavedColorGrading = true;
 	private transient boolean isInitialized = false;
 
@@ -63,15 +80,17 @@ public class CustomizableHealthConfig {
 	public static synchronized void load() {
 		boolean needsRewrite = false;
 
-		if (Files.exists(CONFIG_PATH)) {
+		Path pathToLoad = Files.exists(CONFIG_PATH) ? CONFIG_PATH : (Files.exists(LEGACY_CONFIG_PATH) ? LEGACY_CONFIG_PATH : null);
+
+		if (pathToLoad != null) {
 			try {
-				long fileSize = Files.size(CONFIG_PATH);
+				long fileSize = Files.size(pathToLoad);
 				if (fileSize == 0) {
 					CustomizableMobsHealthIndicator.LOGGER.warn("Config file is empty. Restoring defaults.");
 					instance = new CustomizableHealthConfig();
 					needsRewrite = true;
 				} else {
-					try (Reader reader = Files.newBufferedReader(CONFIG_PATH, StandardCharsets.UTF_8)) {
+					try (Reader reader = Files.newBufferedReader(pathToLoad, StandardCharsets.UTF_8)) {
 						instance = GSON.fromJson(reader, CustomizableHealthConfig.class);
 					}
 					if (instance == null) {
@@ -108,6 +127,7 @@ public class CustomizableHealthConfig {
 		instance.lastSavedHideFullHealth = instance.hideFullHealth;
 		instance.lastSavedHideInvisible = instance.hideInvisible;
 		instance.lastSavedMaxDistance = instance.maxDistance;
+		instance.lastSavedMaxHeartRows = instance.maxHeartRows;
 		instance.lastSavedColorGrading = instance.colorGrading;
 		instance.isInitialized = true;
 
@@ -136,6 +156,7 @@ public class CustomizableHealthConfig {
 			&& instance.hideFullHealth == instance.lastSavedHideFullHealth
 			&& instance.hideInvisible == instance.lastSavedHideInvisible
 			&& Math.abs(instance.maxDistance - instance.lastSavedMaxDistance) < 0.01f
+			&& instance.maxHeartRows == instance.lastSavedMaxHeartRows
 			&& instance.colorGrading == instance.lastSavedColorGrading) {
 			return;
 		}
@@ -166,6 +187,7 @@ public class CustomizableHealthConfig {
 			instance.lastSavedHideFullHealth = instance.hideFullHealth;
 			instance.lastSavedHideInvisible = instance.hideInvisible;
 			instance.lastSavedMaxDistance = instance.maxDistance;
+			instance.lastSavedMaxHeartRows = instance.maxHeartRows;
 			instance.lastSavedColorGrading = instance.colorGrading;
 			instance.isInitialized = true;
 		} catch (Exception e) {
@@ -184,5 +206,6 @@ public class CustomizableHealthConfig {
 			config.heartTexture = HeartTextureStyle.VANILLA;
 		}
 		config.maxDistance = Math.clamp(config.maxDistance, 8.0f, 64.0f);
+		config.maxHeartRows = Math.clamp(config.maxHeartRows, 1, 5);
 	}
 }

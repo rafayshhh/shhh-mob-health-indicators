@@ -1,6 +1,6 @@
 {
 	"modmenu.nameTranslation.customizable-mobs-health-indicator": "Customizable Mobs Health Indicator",
-	"modmenu.descriptionTranslation.customizable-mobs-health-indicator": "A fully customizable mob health indicator mod with multiple visual presets, RPG tiered hearts, and comprehensive mob category filtering.",
+	"modmenu.descriptionTranslation.customizable-mobs-health-indicator": "A fully customizable mob health indicator mod with multiple visual presets, RPG tiered hearts, client commands, and comprehensive mob category filtering.",
 
 	"key.category.customizable-mobs-health-indicator.main": "Customizable Mobs Health Indicator",
 	"key.customizable-mobs-health-indicator.toggle": "Toggle Mob Health Indicators",
@@ -19,6 +19,7 @@
 	"customizable-mobs-health-indicator.config.hide_full_health": "Hide at 100% HP",
 	"customizable-mobs-health-indicator.config.hide_invisible": "Hide Invisible",
 	"customizable-mobs-health-indicator.config.distance": "Max Distance: %dm",
+	"customizable-mobs-health-indicator.config.max_rows": "Max Rows: %d",
 	"customizable-mobs-health-indicator.config.color_grading": "Dynamic Color Grading",
 
 	"customizable-mobs-health-indicator.tooltip.enabled": "Master switch to turn all mob health indicators ON or OFF.",
@@ -33,6 +34,7 @@
 	"customizable-mobs-health-indicator.tooltip.hide_full_health": "Hide indicators for unharmed mobs at 100% health to reduce clutter.",
 	"customizable-mobs-health-indicator.tooltip.hide_invisible": "Hide indicators when mobs have active invisibility status effects.",
 	"customizable-mobs-health-indicator.tooltip.distance": "Maximum distance in blocks to display mob health indicators.",
+	"customizable-mobs-health-indicator.tooltip.max_rows": "Maximum number of stacked heart rows to display (1 to 5).",
 	"customizable-mobs-health-indicator.tooltip.color_grading": "Dynamically shift health color from green to red based on remaining HP.",
 
 	"customizable-mobs-health-indicator.heart_texture.vanilla": "Vanilla (Textured)",
@@ -50,7 +52,23 @@
 
 	"customizable-mobs-health-indicator.feedback.enabled": "Mob Health Indicators: ON (%s)",
 	"customizable-mobs-health-indicator.feedback.disabled": "Mob Health Indicators: OFF",
+	"customizable-mobs-health-indicator.feedback.preset_changed": "Mob health preset changed to: %s",
 
-	"customizable-mobs-health-indicator.command.preset_changed": "Mob health preset set to",
-	"customizable-mobs-health-indicator.command.invalid_preset": "Invalid preset '%s'. Available: hearts, compact, bar, numeric, lifesteal"
+	"customizable-mobs-health-indicator.command.invalid_preset": "Unknown health preset: '%s'. Available: hearts, compact, bar, numeric, lifesteal",
+	"customizable-mobs-health-indicator.command.invalid_texture": "Unknown heart texture: '%s'. Available: vanilla, hardcore, unicode",
+	"customizable-mobs-health-indicator.command.position_changed": "Indicator position set to: %s",
+	"customizable-mobs-health-indicator.command.texture_changed": "Heart texture style set to: %s",
+	"customizable-mobs-health-indicator.command.distance_changed": "Max render distance set to: %d blocks",
+	"customizable-mobs-health-indicator.command.max_rows_changed": "Max heart rows set to: %d",
+	"customizable-mobs-health-indicator.command.absorption_status": "Absorption hearts: %s",
+	"customizable-mobs-health-indicator.command.hostile_status": "Hostile mobs: %s",
+	"customizable-mobs-health-indicator.command.passive_status": "Passive mobs: %s",
+	"customizable-mobs-health-indicator.command.bosses_status": "Boss mobs: %s",
+	"customizable-mobs-health-indicator.command.named_only_status": "Named only mobs: %s",
+	"customizable-mobs-health-indicator.command.hide_full_health_status": "Hide at 100% HP: %s",
+	"customizable-mobs-health-indicator.command.invisible_status": "Hide invisible mobs: %s",
+	"customizable-mobs-health-indicator.command.color_grading_status": "Dynamic color grading: %s",
+	"customizable-mobs-health-indicator.command.reset_success": "All settings have been reset to factory defaults.",
+	"customizable-mobs-health-indicator.command.status_title": "=== Customizable Mobs Health Indicator Status ===",
+	"customizable-mobs-health-indicator.command.help_header": "--- Customizable Mobs Health Indicator Commands ---"
 }

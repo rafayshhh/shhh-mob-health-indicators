@@ -5,6 +5,12 @@
       "id": "minecraft:default"
     },
     {
+      "type": "space",
+      "advances": {
+        "\uE00F": 9.0
+      }
+    },
+    {
       "type": "bitmap",
       "file": "customizable-mobs-health-indicator:font/hearts.png",
       "ascent": 7,
